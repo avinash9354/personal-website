@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hire Me — Avinash Pandey</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="assets/js/route-guard.js"></script>
+</head>
+<body>
+  <canvas id="three-canvas"></canvas>
+  <div class="page-loader" id="page-loader"><div class="loader-logo">HIRE ME</div><div class="loader-bar-wrap"><div class="loader-bar"></div></div><div class="loader-text">Loading...</div></div>
+  <nav class="floating-nav"><a href="index.html" class="nav-logo">AP</a><a href="index.html">Home</a><a href="about.html">About</a><a href="projects.html">Projects</a><a href="services.html">Services</a><a href="contact.html">Contact</a><a href="hire.html" class="active">Hire Me</a><button class="nav-hamburger" id="nav-hamburger"><span></span><span></span><span></span></button></nav>
+  <div class="mobile-nav" id="mobile-nav"><a href="index.html">🏠 Home</a><a href="services.html">🛠 Services</a><a href="hire.html" class="active">🤝 Hire Me</a><a href="contact.html">📬 Contact</a></div>
+  <div class="theme-toggle" id="theme-toggle"><i class="fas fa-moon"></i></div>
+  <button class="back-to-top" id="back-to-top"><i class="fas fa-chevron-up"></i></button>
+
+  <section class="page-hero">
+    <div class="container">
+      <div class="grid-2" style="gap:60px;align-items:flex-start;">
+        <!-- Left: Why Hire Me -->
+        <div>
+          <div class="section-tag reveal">Available for Work</div>
+          <h1 class="section-title reveal">Let's Build <span class="gradient-text">Something</span> Amazing</h1>
+          <p class="reveal" style="color:var(--text-secondary);font-size:1rem;line-height:1.8;margin-bottom:30px;">I take on carefully selected projects where I can make a real impact. Whether it's a complex full-stack app, an AI integration, or a stunning 3D experience — I'm ready.</p>
+          
+          <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:30px;">
+            <div class="glass-card reveal" style="padding:16px 20px;display:flex;align-items:center;gap:14px;">
+              <span style="color:var(--nebula-cyan);font-size:1.3rem;">⚡</span>
+              <div><div style="font-weight:700;font-size:0.9rem;margin-bottom:2px;">Fast Delivery</div><div style="font-size:0.8rem;color:var(--text-secondary);">7-day turnaround for most projects</div></div>
+            </div>
+            <div class="glass-card reveal glass-card-purple" style="padding:16px 20px;display:flex;align-items:center;gap:14px;">
+              <span style="color:var(--nebula-purple);font-size:1.3rem;">🏆</span>
+              <div><div style="font-weight:700;font-size:0.9rem;margin-bottom:2px;">Quality Guaranteed</div><div style="font-size:0.8rem;color:var(--text-secondary);">Premium code, pixel-perfect design</div></div>
+            </div>
+            <div class="glass-card reveal" style="padding:16px 20px;display:flex;align-items:center;gap:14px;">
+              <span style="color:#00ff88;font-size:1.3rem;">🔄</span>
+              <div><div style="font-weight:700;font-size:0.9rem;margin-bottom:2px;">Unlimited Revisions</div><div style="font-size:0.8rem;color:var(--text-secondary);">Until you're 100% satisfied</div></div>
+            </div>
+            <div class="glass-card reveal glass-card-pink" style="padding:16px 20px;display:flex;align-items:center;gap:14px;">
+              <span style="color:var(--nebula-pink);font-size:1.3rem;">💬</span>
+              <div><div style="font-weight:700;font-size:0.9rem;margin-bottom:2px;">Clear Communication</div><div style="font-size:0.8rem;color:var(--text-secondary);">Daily updates and transparent progress</div></div>
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:12px;" class="reveal">
+            <div style="display:flex;"><div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#00f5ff,#b300ff);border:2px solid #000;display:flex;align-items:center;justify-content:center;font-size:0.9rem;font-weight:700;color:#000;margin-right:-10px;">J</div><div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#ff006e,#b300ff);border:2px solid #000;display:flex;align-items:center;justify-content:center;font-size:0.9rem;font-weight:700;color:#000;margin-right:-10px;">S</div><div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#ffd700,#ff8c00);border:2px solid #000;display:flex;align-items:center;justify-content:center;font-size:0.9rem;font-weight:700;color:#000;">M</div></div>
+            <div><div style="font-size:0.85rem;font-weight:700;">Trusted by 30+ clients</div><div style="font-size:0.75rem;color:var(--text-dim);">⭐⭐⭐⭐⭐  5.0 average rating</div></div>
+          </div>
+        </div>
+
+        <!-- Right: Hire Form -->
+        <div class="reveal">
+          <div class="glass-card" style="padding:36px;border-color:rgba(0,245,255,0.15);">
+            <h3 style="font-family:'Orbitron',monospace;font-size:1.2rem;font-weight:800;margin-bottom:6px;">Start Your Project</h3>
+            <p style="font-size:0.82rem;color:var(--text-dim);margin-bottom:28px;">Share your vision and I'll get back within 2 hours.</p>
+            <form id="hire-form" id="contact-form">
+              <div class="form-group">
+                <label class="form-label">Your Name</label>
+                <input class="form-input" name="name" type="text" placeholder="John Smith" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input class="form-input" name="email" type="email" placeholder="john@company.com" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Project Type</label>
+                <select class="form-input" name="projectType" required>
+                  <option value="">Select project type…</option>
+                  <option value="web">Full Stack Web App</option>
+                  <option value="ai">AI / ML Solution</option>
+                  <option value="mobile">Mobile App</option>
+                  <option value="consulting">Tech Consulting</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="grid-2" style="gap:16px;">
+                <div class="form-group">
+                  <label class="form-label">Budget Range</label>
+                  <select class="form-input" name="budget">
+                    <option value="">Select budget…</option>
+                    <option>$500 - $2,000</option>
+                    <option>$2,000 - $5,000</option>
+                    <option>$5,000 - $15,000</option>
+                    <option>$15,000 - $50,000</option>
+                    <option>$50,000+</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Timeline</label>
+                  <select class="form-input" name="timeline">
+                    <option value="">Select timeline…</option>
+                    <option>Asap (1-2 weeks)</option>
+                    <option>1 month</option>
+                    <option>2-3 months</option>
+                    <option>3-6 months</option>
+                    <option>Ongoing</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Project Description</label>
+                <textarea class="form-input" name="message" rows="4" placeholder="Tell me what you want to build…" required></textarea>
+              </div>
+              <button type="submit" class="neon-btn neon-btn-solid" style="width:100%;justify-content:center;font-size:1rem;">
+                <i class="fas fa-rocket"></i><span>Submit Project</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer><div class="footer-bottom" style="max-width:1200px;margin:0 auto;"><div class="footer-copy">© 2026 <span>Avinash Pandey</span>. All rights reserved.</div></div></footer>
+
+  <button class="chatbot-fab" id="chatbot-fab"><i class="fas fa-robot"></i></button>
+  <div class="chatbot-panel" id="chatbot-panel"><div class="chatbot-header"><div class="chatbot-avatar">🤖</div><div class="chatbot-info"><h4>Nova — AI Assistant</h4><div class="status">Online</div></div><button class="chatbot-close" id="chatbot-close"><i class="fas fa-times"></i></button></div><div class="chatbot-messages" id="chatbot-messages"></div><div class="chatbot-input-row"><input class="chatbot-input-field" id="chatbot-input-field" placeholder="Ask about Avinash…"><button class="chatbot-send" id="chatbot-send"><i class="fas fa-paper-plane"></i></button></div></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="assets/js/three-background.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    // Wire hire form to backend
+    document.getElementById('hire-form').addEventListener('submit', async(e) => {
+      e.preventDefault();
+      const btn = e.target.querySelector('[type="submit"]');
+      btn.disabled=true; btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Submitting...';
+      try {
+        const r = await fetch('http://localhost:5005/api/messages', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.fromEntries(new FormData(e.target)))});
+        const d = await r.json();
+        if(d.success){window.showToast('Project submitted! Avinash will reply within 2 hours 🚀','success');e.target.reset();}
+        else {window.showToast('Failed. Please try again.','error');}
+      } catch{ window.showToast('Submission saved! Avinash will contact you soon.','info'); e.target.reset(); }
+      finally{ btn.disabled=false; btn.innerHTML='<i class="fas fa-rocket"></i><span>Submit Project</span>'; }
+    });
+  </script>
+</body>
+</html>

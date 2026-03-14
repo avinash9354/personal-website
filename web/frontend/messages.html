@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Messages — Admin Panel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/dashboard.css">
+  <style>
+    .msg-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:200px;color:rgba(232,244,253,0.35);gap:12px;}
+    .msg-empty i{font-size:2.5rem;}
+    .msg-unread{border-left:3px solid #00f5ff!important;}
+    .msg-badge{background:rgba(255,0,110,0.15);border:1px solid rgba(255,0,110,0.3);color:#ff006e;padding:2px 8px;border-radius:12px;font-size:0.7rem;font-weight:700;}
+    .status-pill{display:inline-block;padding:3px 12px;border-radius:20px;font-size:0.7rem;font-weight:700;}
+    .status-unread{background:rgba(0,245,255,0.1);color:#00f5ff;border:1px solid rgba(0,245,255,0.2);}
+    .status-read{background:rgba(255,255,255,0.05);color:rgba(232,244,253,0.5);border:1px solid rgba(255,255,255,0.08);}
+  </style>
+</head>
+<body class="admin-body">
+  <canvas id="three-canvas"></canvas>
+  <div class="dashboard-layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand"><a href="index.html" class="sidebar-logo">AVINASH.DEV</a><span class="sidebar-tagline">ADMIN PANEL</span></div>
+      <div class="sidebar-profile">
+        <div class="sidebar-avatar"><img src="assets/images/profile.png" alt="Avinash"><span class="online-dot"></span></div>
+        <div><span class="sidebar-user-name">Admin</span><span class="sidebar-user-role">Administrator</span></div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="sidebar-nav-section"><div class="sidebar-nav-section-title">Main</div>
+          <a href="dashboard.html" class="sidebar-link"><i class="fas fa-th-large"></i>Dashboard</a>
+          <a href="profile.html" class="sidebar-link"><i class="fas fa-user-circle"></i>Profile</a>
+          <a href="messages.html" class="sidebar-link active"><i class="fas fa-envelope"></i>Messages<span class="sidebar-badge" id="unread-count"></span></a>
+          <a href="projects.html" class="sidebar-link"><i class="fas fa-rocket"></i>Projects</a>
+        </div>
+        <div class="sidebar-nav-section"><div class="sidebar-nav-section-title">Tools</div>
+          <a href="ai-assistant.html" class="sidebar-link"><i class="fas fa-robot"></i>AI Assistant</a>
+          <a href="settings.html" class="sidebar-link"><i class="fas fa-cog"></i>Settings</a>
+          <a href="index.html" class="sidebar-link"><i class="fas fa-globe"></i>View Site</a>
+          <a href="#" id="logout-btn" class="sidebar-link"><i class="fas fa-sign-out-alt"></i>Logout</a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="dashboard-main">
+      <div class="dash-mobile-toggle" id="dash-mobile-toggle"><i class="fas fa-bars"></i></div>
+      <div class="dash-topbar">
+        <div class="dash-topbar-left"><h1>Messages</h1><p>All enquiries from your portfolio contact form</p></div>
+        <div class="dash-topbar-right">
+          <button class="neon-btn neon-btn-sm" onclick="loadMessages()"><i class="fas fa-sync-alt"></i><span>Refresh</span></button>
+        </div>
+      </div>
+
+      <div class="messages-layout">
+        <!-- Messages Sidebar -->
+        <div class="messages-sidebar">
+          <div class="messages-sidebar-header">
+            <h3>Inbox <span class="msg-badge" id="inbox-badge">Loading...</span></h3>
+            <input class="form-input" type="text" id="msg-search" placeholder="Search messages…" style="padding:8px 12px;font-size:0.82rem;" oninput="filterMessages()">
+          </div>
+          <div class="messages-list" id="messages-list">
+            <div class="msg-empty"><i class="fas fa-envelope-open"></i><span>Loading messages...</span></div>
+          </div>
+        </div>
+
+        <!-- Message Detail -->
+        <div class="msg-detail-panel" id="msg-detail-panel">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:20px;border-bottom:1px solid var(--glass-border);">
+            <div style="display:flex;align-items:center;gap:18px;">
+              <div id="detail-avatar" style="width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--nebula-cyan),var(--nebula-purple));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.5rem;color:#000;box-shadow:0 0 20px rgba(0,245,255,0.2);">?</div>
+              <div>
+                <div id="detail-name" style="font-size:1.2rem;font-weight:700;letter-spacing:0.5px;margin-bottom:4px;">Select a message</div>
+                <div id="detail-email" style="font-size:0.9rem;color:var(--nebula-cyan);opacity:0.8;">–</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;">
+              <button class="dash-icon-btn" title="Delete" onclick="deleteMsg()" id="delete-btn" style="display:none;"><i class="fas fa-trash"></i></button>
+            </div>
+          </div>
+          <div id="detail-meta" style="font-size:0.8rem;color:var(--text-dim);margin-bottom:6px;"></div>
+          <div id="detail-subject" style="font-size:0.85rem;font-weight:700;color:var(--nebula-cyan);margin-bottom:10px;"></div>
+          <div id="detail-msg" style="flex:1;font-size:1rem;color:var(--text-secondary);line-height:1.8;padding:30px;background:rgba(255,255,255,0.015);border:1px solid rgba(255,255,255,0.05);border-radius:18px;white-space:pre-wrap;">
+            <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:rgba(232,244,253,0.25);gap:15px;">
+              <i class="fas fa-mouse-pointer" style="font-size:2rem;"></i>
+              <span>Select a message to read</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="assets/js/three-background.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/admin-auth.js"></script>
+  <script>
+    const API = 'http://localhost:5005/api/messages';
+    let allMessages = [];
+    let currentMsgId = null;
+
+    async function loadMessages() {
+      const list = document.getElementById('messages-list');
+      list.innerHTML = '<div class="msg-empty"><i class="fas fa-spinner fa-spin"></i><span>Loading...</span></div>';
+      try {
+        const res = await fetch(API);
+        const data = await res.json();
+        if (data.success && data.messages) {
+          allMessages = data.messages;
+          renderMessages(allMessages);
+        } else {
+          list.innerHTML = '<div class="msg-empty"><i class="fas fa-exclamation-circle"></i><span>Failed to load messages</span></div>';
+        }
+      } catch(e) {
+        // If backend not available, show sample message
+        allMessages = [];
+        list.innerHTML = '<div class="msg-empty"><i class="fas fa-wifi"></i><span>Backend offline. Start the server to see real messages.</span></div>';
+      }
+    }
+
+    function timeAgo(dateStr) {
+      const diff = Date.now() - new Date(dateStr).getTime();
+      const m = Math.floor(diff/60000), h = Math.floor(diff/3600000), d = Math.floor(diff/86400000);
+      if (d > 0) return d + 'd ago';
+      if (h > 0) return h + 'h ago';
+      if (m > 0) return m + 'm ago';
+      return 'Just now';
+    }
+
+    function renderMessages(msgs) {
+      const list = document.getElementById('messages-list');
+      const badge = document.getElementById('inbox-badge');
+      const unread = document.getElementById('unread-count');
+
+      if (!msgs.length) {
+        list.innerHTML = '<div class="msg-empty"><i class="fas fa-inbox"></i><span>No messages yet</span></div>';
+        badge.textContent = '0';
+        if(unread) unread.style.display='none';
+        return;
+      }
+
+      const unreadCount = msgs.filter(m => m.status === 'unread').length;
+      badge.textContent = unreadCount + ' unread';
+      if(unread) { unread.textContent = unreadCount; unread.style.display = unreadCount ? '' : 'none'; }
+
+      list.innerHTML = msgs.map(msg => {
+        const initial = (msg.name || '?')[0].toUpperCase();
+        const isUnread = msg.status === 'unread';
+        const colors = ['linear-gradient(135deg,#00f5ff,#b300ff)','linear-gradient(135deg,#ff006e,#b300ff)','linear-gradient(135deg,#ffd700,#ff8c00)','linear-gradient(135deg,#00ff88,#00f5ff)'];
+        const color = colors[initial.charCodeAt(0) % colors.length];
+        return `<div class="message-preview-item ${isUnread ? 'msg-unread' : ''}" onclick="showDetail('${msg._id}')" data-id="${msg._id}" data-name="${msg.name}" data-email="${msg.email}" data-msg="${(msg.message||'').replace(/"/g,'&quot;')}" data-subject="${(msg.subject||'').replace(/"/g,'&quot;')}" data-time="${msg.createdAt}">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:${color};display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;color:#000;flex-shrink:0;">${initial}</div>
+            <div style="flex:1;min-width:0;">
+              <div style="font-size:0.88rem;font-weight:700;color:var(--text-primary);margin-bottom:2px;">${msg.name}</div>
+              <div style="font-size:0.75rem;color:var(--text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${msg.message ? msg.message.substring(0,50)+'…' : msg.subject}</div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-top:6px;">
+            <span style="font-size:0.7rem;color:var(--text-dim);">${timeAgo(msg.createdAt)}</span>
+            ${isUnread ? '<span style="width:8px;height:8px;border-radius:50%;background:var(--nebula-cyan);display:inline-block;"></span>' : ''}
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    function showDetail(id) {
+      const el = document.querySelector(`[data-id="${id}"]`);
+      if (!el) return;
+      document.querySelectorAll('.message-preview-item').forEach(i => i.classList.remove('active'));
+      el.classList.add('active');
+      currentMsgId = id;
+
+      document.getElementById('detail-avatar').textContent = el.dataset.name[0].toUpperCase();
+      document.getElementById('detail-name').textContent = el.dataset.name;
+      document.getElementById('detail-email').textContent = el.dataset.email;
+      document.getElementById('detail-subject').textContent = el.dataset.subject ? '📌 ' + el.dataset.subject : '';
+      document.getElementById('detail-meta').textContent = new Date(el.dataset.time).toLocaleString();
+      document.getElementById('detail-msg').textContent = el.dataset.msg || '(No content)';
+      document.getElementById('delete-btn').style.display = '';
+
+      // Mark as read via API
+      fetch(`${API}/${id}`, { method: 'PUT', headers: {'Content-Type':'application/json'}, body: JSON.stringify({status:'read'}) })
+        .catch(() => {});
+      el.classList.remove('msg-unread');
+    }
+
+    function filterMessages() {
+      const q = document.getElementById('msg-search').value.toLowerCase();
+      const filtered = allMessages.filter(m => 
+        (m.name||'').toLowerCase().includes(q) || 
+        (m.email||'').toLowerCase().includes(q) || 
+        (m.message||'').toLowerCase().includes(q)
+      );
+      renderMessages(filtered);
+    }
+
+    function deleteMsg() {
+      if (!currentMsgId) return;
+      if (confirm('Delete this message?')) {
+        allMessages = allMessages.filter(m => m._id !== currentMsgId);
+        renderMessages(allMessages);
+        document.getElementById('detail-name').textContent = 'Select a message';
+        document.getElementById('detail-email').textContent = '–';
+        document.getElementById('detail-msg').innerHTML = '<span style="color:rgba(232,244,253,0.3);">Select a message to read</span>';
+        document.getElementById('detail-subject').textContent = '';
+        document.getElementById('detail-meta').textContent = '';
+        document.getElementById('delete-btn').style.display = 'none';
+        currentMsgId = null;
+        showToast('Message deleted', 'success');
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', loadMessages);
+  </script>
+</body>
+</html>

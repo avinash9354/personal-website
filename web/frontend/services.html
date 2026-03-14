@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services — Avinash Pandey</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .pricing-card { position:relative;text-align:center; }
+    .pricing-card.featured { border-color:rgba(0,245,255,0.4);background:rgba(0,245,255,0.04); }
+    .popular-badge { position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--nebula-cyan),var(--nebula-purple));color:#000;font-size:0.7rem;font-weight:800;padding:4px 16px;border-radius:20px;white-space:nowrap;letter-spacing:1px; }
+    .pricing-price { font-family:'Orbitron',monospace;font-size:2.8rem;font-weight:900;margin:20px 0 4px; }
+    .pricing-period { font-size:0.8rem;color:var(--text-dim); }
+    .pricing-features { list-style:none;text-align:left;margin:24px 0;display:flex;flex-direction:column;gap:10px; }
+    .pricing-features li { font-size:0.88rem;color:var(--text-secondary);display:flex;align-items:center;gap:10px; }
+    .pricing-features li span { color:var(--nebula-cyan); }
+  </style>
+  <script src="assets/js/route-guard.js"></script>
+</head>
+<body>
+  <canvas id="three-canvas"></canvas>
+  <div class="page-loader" id="page-loader"><div class="loader-logo">SERVICES</div><div class="loader-bar-wrap"><div class="loader-bar"></div></div><div class="loader-text">Loading...</div></div>
+  <nav class="floating-nav"><a href="index.html" class="nav-logo">AP</a><a href="index.html">Home</a><a href="about.html">About</a><a href="projects.html">Projects</a><a href="services.html" class="active">Services</a><a href="contact.html">Contact</a><a href="hire.html">Hire Me</a><button class="nav-hamburger" id="nav-hamburger"><span></span><span></span><span></span></button></nav>
+  <div class="mobile-nav" id="mobile-nav"><a href="index.html">🏠 Home</a><a href="services.html" class="active">🛠 Services</a><a href="hire.html">🤝 Hire Me</a><a href="contact.html">📬 Contact</a></div>
+  <div class="theme-toggle" id="theme-toggle"><i class="fas fa-moon"></i></div>
+  <button class="back-to-top" id="back-to-top"><i class="fas fa-chevron-up"></i></button>
+
+  <section class="page-hero" style="min-height:auto;padding-top:140px;padding-bottom:60px;">
+    <div class="container" style="text-align:center;">
+      <div class="section-tag reveal">What I Offer</div>
+      <h1 class="section-title reveal">My <span class="gradient-text">Services</span></h1>
+      <p class="section-subtitle reveal">Premium digital services designed to elevate your business and bring your vision to life.</p>
+    </div>
+  </section>
+
+  <!-- Services Grid -->
+  <section style="padding:0 20px 80px;position:relative;z-index:1;">
+    <div class="container">
+      <div class="grid-3" style="gap:24px;">
+        <div class="glass-card tilt reveal" style="padding:32px;">
+          <div style="width:64px;height:64px;border-radius:18px;background:rgba(0,245,255,0.1);border:1px solid rgba(0,245,255,0.2);display:flex;align-items:center;justify-content:center;font-size:2rem;margin-bottom:20px;">💻</div>
+          <h3 style="font-family:'Orbitron',monospace;font-size:1rem;font-weight:800;margin-bottom:12px;color:var(--nebula-cyan);">Full Stack Development</h3>
+          <p style="font-size:0.88rem;color:var(--text-secondary);line-height:1.7;margin-bottom:16px;">End-to-end web application development from UI/UX design to backend APIs, databases and cloud deployment.</p>
+          <ul style="list-style:none;font-size:0.82rem;color:var(--text-secondary);margin-bottom:20px;"><li style="padding:4px 0;">✅ React / Next.js Frontends</li><li style="padding:4px 0;">✅ Node.js / Python Backends</li><li style="padding:4px 0;">✅ Database Design & Optimization</li><li style="padding:4px 0;">✅ REST / GraphQL APIs</li></ul>
+          <a href="hire.html" class="neon-btn neon-btn-sm"><i class="fas fa-arrow-right"></i><span>Get Started</span></a>
+        </div>
+        <div class="glass-card tilt reveal glass-card-purple" style="padding:32px;">
+          <div style="width:64px;height:64px;border-radius:18px;background:rgba(179,0,255,0.1);border:1px solid rgba(179,0,255,0.2);display:flex;align-items:center;justify-content:center;font-size:2rem;margin-bottom:20px;">🤖</div>
+          <h3 style="font-family:'Orbitron',monospace;font-size:1rem;font-weight:800;margin-bottom:12px;color:var(--nebula-purple);">AI / ML Solutions</h3>
+          <p style="font-size:0.88rem;color:var(--text-secondary);line-height:1.7;margin-bottom:16px;">Custom AI models, intelligent chatbots, computer vision systems, and seamless OpenAI/LLM integrations.</p>
+          <ul style="list-style:none;font-size:0.82rem;color:var(--text-secondary);margin-bottom:20px;"><li style="padding:4px 0;">✅ LLM / GPT-4 Integration</li><li style="padding:4px 0;">✅ Custom ML Model Training</li><li style="padding:4px 0;">✅ Intelligent Chatbots</li><li style="padding:4px 0;">✅ Computer Vision Systems</li></ul>
+          <a href="hire.html" class="neon-btn neon-btn-sm neon-btn-purple"><i class="fas fa-arrow-right"></i><span>Get Started</span></a>
+        </div>
+        <div class="glass-card tilt reveal" style="padding:32px;">
+          <div style="width:64px;height:64px;border-radius:18px;background:rgba(255,0,110,0.1);border:1px solid rgba(255,0,110,0.2);display:flex;align-items:center;justify-content:center;font-size:2rem;margin-bottom:20px;">🌌</div>
+          <h3 style="font-family:'Orbitron',monospace;font-size:1rem;font-weight:800;margin-bottom:12px;color:var(--nebula-pink);">3D Web Experiences</h3>
+          <p style="font-size:0.88rem;color:var(--text-secondary);line-height:1.7;margin-bottom:16px;">Breathtaking interactive 3D websites, product configurators, and metaverse-ready environments using Three.js.</p>
+          <ul style="list-style:none;font-size:0.82rem;color:var(--text-secondary);margin-bottom:20px;"><li style="padding:4px 0;">✅ Three.js / WebGL Scenes</li><li style="padding:4px 0;">✅ 3D Product Configurators</li><li style="padding:4px 0;">✅ Interactive Animations</li><li style="padding:4px 0;">✅ WebXR / AR Experiences</li></ul>
+          <a href="hire.html" class="neon-btn neon-btn-sm neon-btn-pink"><i class="fas fa-arrow-right"></i><span>Get Started</span></a>
+        </div>
+        <div class="glass-card tilt reveal" style="padding:32px;">
+          <div style="width:64px;height:64px;border-radius:18px;background:rgba(255,215,0,0.1);border:1px solid rgba(255,215,0,0.2);display:flex;align-items:center;justify-content:center;font-size:2rem;margin-bottom:20px;">☁️</div>
+          <h3 style="font-family:'Orbitron',monospace;font-size:1rem;font-weight:800;margin-bottom:12px;color:var(--nebula-gold);">Cloud & DevOps</h3>
+          <p style="font-size:0.88rem;color:var(--text-secondary);line-height:1.7;margin-bottom:16px;">Scalable cloud infrastructure, CI/CD pipelines, and DevOps automation for reliable, secure applications.</p>
+          <ul style="list-style:none;font-size:0.82rem;color:var(--text-secondary);margin-bottom:20px;"><li style="padding:4px 0;">✅ AWS / GCP Architecture</li><li style="padding:4px 0;">✅ Docker & Kubernetes</li><li style="padding:4px 0;">✅ CI/CD Pipelines</li><li style="padding:4px 0;">✅ Security Auditing</li></ul>
+          <a href="hire.html" class="neon-btn neon-btn-sm neon-btn-gold"><i class="fas fa-arrow-right"></i><span>Get Started</span></a>
+        </div>
+        <div class="glass-card tilt reveal glass-card-purple" style="padding:32px;">
+          <div style="width:64px;height:64px;border-radius:18px;background:rgba(0,102,255,0.1);border:1px solid rgba(0,102,255,0.2);display:flex;align-items:center;justify-content:center;font-size:2rem;margin-bottom:20px;">⛓️</div>
+          <h3 style="font-family:'Orbitron',monospace;font-size:1rem;font-weight:800;margin-bottom:12px;color:#4da6ff;">Blockchain / Web3</h3>
+          <p style="font-size:0.88rem;color:var(--text-secondary);line-height:1.7;margin-bottom:16px;">Smart contract development, NFT platforms, DeFi protocols and full-stack dApp creation on Ethereum.</p>
+          <ul style="list-style:none;font-size:0.82rem;color:var(--text-secondary);margin-bottom:20px;"><li style="padding:4px 0;">✅ Solidity Smart Contracts</li><li style="padding:4px 0;">✅ NFT Marketplaces</li><li style="padding:4px 0;">✅ DeFi Protocols</li><li style="padding:4px 0;">✅ Web3 Integration</li></ul>
+          <a href="hire.html" class="neon-btn neon-btn-sm"><i class="fas fa-arrow-right"></i><span>Get Started</span></a>
+        </div>
+        <div class="glass-card tilt reveal" style="padding:32px;">
+          <div style="width:64px;height:64px;border-radius:18px;background:rgba(0,255,136,0.1);border:1px solid rgba(0,255,136,0.2);display:flex;align-items:center;justify-content:center;font-size:2rem;margin-bottom:20px;">🎯</div>
+          <h3 style="font-family:'Orbitron',monospace;font-size:1rem;font-weight:800;margin-bottom:12px;color:#00ff88;">Tech Consulting</h3>
+          <p style="font-size:0.88rem;color:var(--text-secondary);line-height:1.7;margin-bottom:16px;">Strategic technical guidance, code reviews, architecture planning and team mentoring for growing startups.</p>
+          <ul style="list-style:none;font-size:0.82rem;color:var(--text-secondary);margin-bottom:20px;"><li style="padding:4px 0;">✅ Architecture Reviews</li><li style="padding:4px 0;">✅ Code Audits</li><li style="padding:4px 0;">✅ Tech Stack Selection</li><li style="padding:4px 0;">✅ Team Mentoring</li></ul>
+          <a href="hire.html" class="neon-btn neon-btn-sm"><i class="fas fa-arrow-right"></i><span>Book Call</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section style="padding:80px 20px;position:relative;z-index:1;">
+    <div class="container">
+      <div class="section-header"><div class="section-tag reveal">Pricing</div><h2 class="section-title reveal">Simple <span class="gradient-text-pink">Pricing</span></h2><p class="section-subtitle reveal">Transparent pricing — no hidden fees, no surprises.</p></div>
+      <div class="grid-3" style="gap:24px;max-width:900px;margin:0 auto;">
+        <div class="glass-card pricing-card reveal" style="padding:32px;">
+          <h4 style="font-family:'Orbitron',monospace;font-size:0.85rem;letter-spacing:2px;color:var(--text-secondary);">STARTER</h4>
+          <div class="pricing-price gradient-text">$999</div>
+          <div class="pricing-period">per project</div>
+          <ul class="pricing-features"><li><span>✅</span>Landing Page</li><li><span>✅</span>Responsive Design</li><li><span>✅</span>Contact Form</li><li><span>✅</span>7-day delivery</li><li style="color:var(--text-dim);"><span style="color:var(--text-dim);">—</span> Backend / API</li><li style="color:var(--text-dim);"><span style="color:var(--text-dim);">—</span> AI Features</li></ul>
+          <a href="hire.html" class="neon-btn" style="width:100%;justify-content:center;"><span>Get Started</span></a>
+        </div>
+        <div class="glass-card pricing-card featured reveal" style="padding:32px 28px;">
+          <div class="popular-badge">⭐ Most Popular</div>
+          <h4 style="font-family:'Orbitron',monospace;font-size:0.85rem;letter-spacing:2px;color:var(--nebula-cyan);">PRO</h4>
+          <div class="pricing-price gradient-text">$4,999</div>
+          <div class="pricing-period">per project</div>
+          <ul class="pricing-features"><li><span>✅</span>Full-Stack Web App</li><li><span>✅</span>Custom Backend / APIs</li><li><span>✅</span>Database Design</li><li><span>✅</span>Authentication</li><li><span>✅</span>AWS Deployment</li><li><span>✅</span>30-day support</li></ul>
+          <a href="hire.html" class="neon-btn neon-btn-solid" style="width:100%;justify-content:center;"><span>Get Started</span></a>
+        </div>
+        <div class="glass-card pricing-card reveal glass-card-purple" style="padding:32px;">
+          <h4 style="font-family:'Orbitron',monospace;font-size:0.85rem;letter-spacing:2px;color:var(--nebula-purple);">ENTERPRISE</h4>
+          <div class="pricing-price gradient-text-pink">Custom</div>
+          <div class="pricing-period">quote based</div>
+          <ul class="pricing-features"><li><span>✅</span>Everything in Pro</li><li><span>✅</span>AI/ML Integration</li><li><span>✅</span>3D Web Experience</li><li><span>✅</span>Dedicated Team</li><li><span>✅</span>Priority Support</li><li><span>✅</span>NDA Available</li></ul>
+          <a href="contact.html" class="neon-btn neon-btn-purple" style="width:100%;justify-content:center;"><span>Contact Me</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer><div class="footer-bottom" style="max-width:1200px;margin:0 auto;"><div class="footer-copy">© 2026 <span>Avinash Pandey</span>. All rights reserved.</div></div></footer>
+
+  <button class="chatbot-fab" id="chatbot-fab"><i class="fas fa-robot"></i></button>
+  <div class="chatbot-panel" id="chatbot-panel"><div class="chatbot-header"><div class="chatbot-avatar">🤖</div><div class="chatbot-info"><h4>Nova — AI Assistant</h4><div class="status">Online</div></div><button class="chatbot-close" id="chatbot-close"><i class="fas fa-times"></i></button></div><div class="chatbot-messages" id="chatbot-messages"></div><div class="chatbot-input-row"><input class="chatbot-input-field" id="chatbot-input-field" placeholder="Ask about Avinash…"><button class="chatbot-send" id="chatbot-send"><i class="fas fa-paper-plane"></i></button></div></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="assets/js/three-background.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

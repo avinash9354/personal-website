@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — Avinash Pandey</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/dashboard.css">
+</head>
+<body class="admin-body">
+  <canvas id="three-canvas"></canvas>
+
+
+  <div class="dashboard-layout">
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand">
+        <a href="index.html" class="sidebar-logo">AVINASH.DEV</a>
+        <span class="sidebar-tagline">ADMIN PANEL</span>
+      </div>
+      <div class="sidebar-profile">
+        <div class="sidebar-avatar"><img src="assets/images/profile.png" alt="Avinash"><span class="online-dot"></span></div>
+        <div><span class="sidebar-user-name">Avinash Pandey</span><span class="sidebar-user-role">Administrator</span></div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="sidebar-nav-section">
+          <div class="sidebar-nav-section-title">Main</div>
+          <a href="dashboard.html" class="sidebar-link active"><i class="fas fa-th-large"></i>Dashboard</a>
+          <a href="profile.html" class="sidebar-link"><i class="fas fa-user-circle"></i>Profile</a>
+          <a href="messages.html" class="sidebar-link"><i class="fas fa-envelope"></i>Messages<span class="sidebar-badge">3</span></a>
+          <a href="projects.html" class="sidebar-link"><i class="fas fa-rocket"></i>Projects</a>
+        </div>
+        <div class="sidebar-nav-section">
+          <div class="sidebar-nav-section-title">AI Tools</div>
+          <a href="ai-assistant.html" class="sidebar-link"><i class="fas fa-robot"></i>AI Assistant</a>
+        </div>
+        <div class="sidebar-nav-section">
+          <div class="sidebar-nav-section-title">Settings</div>
+          <a href="settings.html" class="sidebar-link"><i class="fas fa-cog"></i>Settings</a>
+          <a href="index.html" class="sidebar-link"><i class="fas fa-globe"></i>View Site</a>
+          <a href="login.html" class="sidebar-link logout-link" id="logout-btn"><i class="fas fa-sign-out-alt"></i>Logout</a>
+        </div>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="sidebar-footer-card">
+          <p>Need help or support?</p>
+          <a href="contact.html" class="neon-btn neon-btn-sm" style="width:100%;justify-content:center;">Contact Support</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="dashboard-main">
+      <div class="dash-mobile-toggle" id="dash-mobile-toggle"><i class="fas fa-bars"></i></div>
+      <!-- Topbar -->
+      <div class="dash-topbar">
+        <div class="dash-topbar-left">
+          <h1>Dashboard</h1>
+          <p id="greeting-text">Good evening, Avinash 👋</p>
+        </div>
+        <div class="dash-topbar-right">
+          <div class="dash-search"><i class="fas fa-search"></i><input class="dash-search-input" type="text" placeholder="Quick search…"></div>
+          <a href="messages.html" class="dash-icon-btn"><i class="fas fa-bell"></i><span class="notif-dot"></span></a>
+          <a href="profile.html" class="dash-icon-btn"><i class="fas fa-user"></i></a>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="dash-stats-grid">
+        <div class="dash-stat-card">
+          <div class="dash-stat-icon"><i class="fas fa-rocket"></i></div>
+          <div class="dash-stat-number" id="stat-projects">50</div>
+          <div class="dash-stat-label">Total Projects</div>
+          <div class="dash-stat-change up"><i class="fas fa-arrow-up"></i> +3 this month</div>
+        </div>
+        <div class="dash-stat-card">
+          <div class="dash-stat-icon"><i class="fas fa-envelope"></i></div>
+          <div class="dash-stat-number" id="stat-messages">24</div>
+          <div class="dash-stat-label">Messages</div>
+          <div class="dash-stat-change up"><i class="fas fa-arrow-up"></i> +8 this week</div>
+        </div>
+        <div class="dash-stat-card">
+          <div class="dash-stat-icon"><i class="fas fa-eye"></i></div>
+          <div class="dash-stat-number" id="stat-views">12.4K</div>
+          <div class="dash-stat-label">Page Views</div>
+          <div class="dash-stat-change up"><i class="fas fa-arrow-up"></i> +24% vs last month</div>
+        </div>
+        <div class="dash-stat-card">
+          <div class="dash-stat-icon"><i class="fas fa-users"></i></div>
+          <div class="dash-stat-number" id="stat-clients">30</div>
+          <div class="dash-stat-label">Happy Clients</div>
+          <div class="dash-stat-change up"><i class="fas fa-arrow-up"></i> +2 new</div>
+        </div>
+      </div>
+
+      <!-- Charts + Recent Messages -->
+      <div class="dash-grid-2-1">
+        <!-- Analytics Chart -->
+        <div class="dash-chart-card">
+          <div class="dash-chart-header">
+            <div><div class="dash-chart-title">Site Activity</div><div class="dash-chart-subtitle">Last 30 days visitor trends</div></div>
+            <select class="form-input" style="padding:8px 12px;font-size:0.78rem;width:auto;border-radius:10px;">
+              <option>Last 30 Days</option><option>Last 90 Days</option><option>This Year</option>
+            </select>
+          </div>
+          <canvas id="activityChart" height="200"></canvas>
+        </div>
+
+        <!-- Recent Messages -->
+        <div class="dash-chart-card">
+          <div class="dash-chart-header">
+            <div><div class="dash-chart-title">Recent Messages</div><div class="dash-chart-subtitle">Latest enquiries</div></div>
+            <a href="messages.html" style="font-size:0.78rem;color:var(--nebula-cyan);text-decoration:none;">View all</a>
+          </div>
+          <div id="recent-messages-list">
+            <div class="message-item-dash"><div class="msg-avatar">J</div><div class="msg-content"><div class="msg-name">John Smith</div><div class="msg-preview">Hi Avinash! Love your work…</div></div><div class="msg-meta"><div class="msg-time">2m ago</div><div class="msg-unread-dot"></div></div></div>
+            <div class="message-item-dash"><div class="msg-avatar">S</div><div class="msg-content"><div class="msg-name">Sarah Lee</div><div class="msg-preview">Re: new project proposal</div></div><div class="msg-meta"><div class="msg-time">1h ago</div></div></div>
+            <div class="message-item-dash"><div class="msg-avatar">M</div><div class="msg-content"><div class="msg-name">Mike Chen</div><div class="msg-preview">When can we schedule a call?</div></div><div class="msg-meta"><div class="msg-time">3h ago</div><div class="msg-unread-dot"></div></div></div>
+            <div class="message-item-dash"><div class="msg-avatar">A</div><div class="msg-content"><div class="msg-name">Ananya Roy</div><div class="msg-preview">The 3D dashboard is amazing!</div></div><div class="msg-meta"><div class="msg-time">1d ago</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Projects -->
+      <div class="dash-chart-card">
+        <div class="dash-chart-header">
+          <div><div class="dash-chart-title">Recent Projects</div><div class="dash-chart-subtitle">Latest work added to portfolio</div></div>
+          <button class="neon-btn neon-btn-sm" id="add-project-btn"><i class="fas fa-plus"></i><span>Add Project</span></button>
+        </div>
+        <div id="recent-projects-list">
+          <div class="project-list-item"><div class="project-list-thumb">🤖</div><div class="project-list-info"><div class="project-list-title">AI Portfolio Assistant</div><div class="project-list-tech"><span class="tag tag-cyan">React</span><span class="tag tag-purple">OpenAI</span></div></div><div class="project-list-actions"><a href="projects.html" class="dash-icon-btn" title="View"><i class="fas fa-eye"></i></a><button class="dash-icon-btn" title="Edit"><i class="fas fa-pen"></i></button></div></div>
+          <div class="project-list-item"><div class="project-list-thumb">🌐</div><div class="project-list-info"><div class="project-list-title">3D Analytics Dashboard</div><div class="project-list-tech"><span class="tag tag-cyan">Three.js</span><span class="tag tag-pink">D3.js</span></div></div><div class="project-list-actions"><a href="projects.html" class="dash-icon-btn"><i class="fas fa-eye"></i></a><button class="dash-icon-btn"><i class="fas fa-pen"></i></button></div></div>
+          <div class="project-list-item"><div class="project-list-thumb">⛓️</div><div class="project-list-info"><div class="project-list-title">Blockchain Voting System</div><div class="project-list-tech"><span class="tag tag-purple">Solidity</span><span class="tag tag-gold">Web3.js</span></div></div><div class="project-list-actions"><a href="projects.html" class="dash-icon-btn"><i class="fas fa-eye"></i></a><button class="dash-icon-btn"><i class="fas fa-pen"></i></button></div></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="assets/js/three-background.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/admin-auth.js"></script>
+  <script>
+    // Greeting
+    const hour = new Date().getHours();
+    const greet = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
+    const el = document.getElementById('greeting-text');
+    if(el) el.textContent = `${greet}, Avinash 👋`;
+
+    // Activity Chart
+    const ctx = document.getElementById('activityChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['Mar 1','Mar 5','Mar 8','Mar 12','Mar 15','Mar 18','Mar 22','Mar 25','Mar 28','Mar 31'],
+        datasets: [{
+          label: 'Visitors',
+          data: [320,480,280,650,520,890,760,950,820,1120],
+          borderColor: '#00f5ff',
+          backgroundColor: 'rgba(0,245,255,0.05)',
+          tension: 0.4,
+          pointBackgroundColor: '#00f5ff',
+          pointRadius: 4,
+          fill: true
+        },{
+          label: 'Page Views',
+          data: [890,1200,750,1600,1380,2100,1900,2400,2100,2800],
+          borderColor: '#b300ff',
+          backgroundColor: 'rgba(179,0,255,0.05)',
+          tension: 0.4,
+          pointBackgroundColor: '#b300ff',
+          pointRadius: 4,
+          fill: true
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { labels: { color: 'rgba(232,244,253,0.7)', font: { family: "'Space Grotesk', sans-serif" } } } },
+        scales: {
+          x: { ticks: { color: 'rgba(232,244,253,0.4)' }, grid: { color: 'rgba(255,255,255,0.04)' } },
+          y: { ticks: { color: 'rgba(232,244,253,0.4)' }, grid: { color: 'rgba(255,255,255,0.04)' } }
+        }
+      }
+    });
+
+    // Logout
+    document.getElementById('logout-btn')?.addEventListener('click', e => {
+      e.preventDefault();
+      sessionStorage.clear();
+      window.location.href = 'login.html';
+    });
+  </script>
+</body>
+</html>

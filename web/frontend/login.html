@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login — Avinash Pandey</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    /* Mode Toggle */
+    .mode-toggle {
+      display: flex;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 50px;
+      padding: 4px;
+      margin-bottom: 28px;
+      position: relative;
+    }
+    .mode-btn {
+      flex: 1;
+      padding: 10px 16px;
+      border: none;
+      background: none;
+      border-radius: 50px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      color: rgba(232,244,253,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      position: relative;
+      z-index: 2;
+    }
+    .mode-btn.active-user {
+      color: #00f5ff;
+    }
+    .mode-btn.active-admin {
+      color: #ff006e;
+    }
+    .mode-pill {
+      position: absolute;
+      top: 4px;
+      bottom: 4px;
+      width: calc(50% - 4px);
+      border-radius: 50px;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1;
+    }
+    .mode-pill.user-side {
+      left: 4px;
+      background: linear-gradient(135deg, rgba(0,245,255,0.15), rgba(0,102,255,0.15));
+      border: 1px solid rgba(0,245,255,0.25);
+    }
+    .mode-pill.admin-side {
+      left: calc(50%);
+      background: linear-gradient(135deg, rgba(255,0,110,0.15), rgba(179,0,255,0.15));
+      border: 1px solid rgba(255,0,110,0.25);
+    }
+
+    /* Admin badge */
+    .admin-notice {
+      background: rgba(255,0,110,0.08);
+      border: 1px solid rgba(255,0,110,0.2);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 0.78rem;
+      color: rgba(232,244,253,0.6);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .admin-notice i { color: #ff006e; }
+
+    /* Submit button colors by mode */
+    .btn-user { background: linear-gradient(135deg, #00f5ff, #0066ff) !important; }
+    .btn-admin { background: linear-gradient(135deg, #ff006e, #b300ff) !important; }
+
+    .login-err {
+      color: #ff006e;
+      font-size: 0.82rem;
+      margin-top: 10px;
+      text-align: center;
+      min-height: 20px;
+    }
+    .login-success {
+      color: #00ff88;
+      font-size: 0.82rem;
+      margin-top: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="three-canvas"></canvas>
+
+  <main style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;position:relative;z-index:1;">
+    <div style="width:100%;max-width:440px;">
+
+      <!-- Logo -->
+      <div style="text-align:center;margin-bottom:28px;">
+        <a href="index.html" style="font-family:'Orbitron',monospace;font-size:2.4rem;font-weight:900;text-decoration:none;background:linear-gradient(135deg,var(--nebula-cyan),var(--nebula-purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">AP</a>
+        <p style="color:var(--text-dim);font-size:0.75rem;margin-top:4px;letter-spacing:3px;">AVINASH PANDEY</p>
+      </div>
+
+      <div class="glass-card" style="padding:36px;">
+
+        <!-- Mode Toggle -->
+        <div class="mode-toggle" id="mode-toggle">
+          <div class="mode-pill user-side" id="mode-pill"></div>
+          <button class="mode-btn active-user" id="btn-user" onclick="switchMode('user')">
+            <i class="fas fa-user"></i> User Login
+          </button>
+          <button class="mode-btn" id="btn-admin" onclick="switchMode('admin')">
+            <i class="fas fa-shield-alt"></i> Admin Login
+          </button>
+        </div>
+
+        <!-- Dynamic header -->
+        <div id="form-header" style="margin-bottom:24px;">
+          <h2 id="form-title" style="font-family:'Orbitron',monospace;font-size:1.35rem;font-weight:800;margin-bottom:6px;">Welcome Back</h2>
+          <p id="form-subtitle" style="color:var(--text-dim);font-size:0.82rem;">Sign in to access the portfolio</p>
+        </div>
+
+        <!-- Admin notice (hidden by default) -->
+        <div class="admin-notice" id="admin-notice" style="display:none;">
+          <i class="fas fa-lock"></i>
+          <span>This section is for the <strong>site owner only</strong>. Unauthorised access is denied.</span>
+        </div>
+
+        <!-- Login Form -->
+        <form id="login-form">
+          <div class="form-group">
+            <label class="form-label" id="email-label">Email Address</label>
+            <div style="position:relative;">
+              <input class="form-input" id="email" type="email" placeholder="your@email.com" required style="padding-left:42px;">
+              <i class="fas fa-envelope" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text-dim);font-size:0.85rem;"></i>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <div style="position:relative;">
+              <input class="form-input" id="password" type="password" placeholder="••••••••" required style="padding-left:42px;padding-right:42px;">
+              <i class="fas fa-lock" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text-dim);font-size:0.85rem;"></i>
+              <button type="button" id="pw-toggle" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:0.85rem;"><i class="fas fa-eye"></i></button>
+            </div>
+          </div>
+
+          <div style="display:flex;justify-content:flex-end;margin-bottom:16px;">
+            <a href="#" style="font-size:0.78rem;color:var(--text-dim);">Forgot Password?</a>
+          </div>
+
+          <button type="submit" id="submit-btn" class="neon-btn neon-btn-solid btn-user" style="width:100%;justify-content:center;font-size:1rem;padding:14px;border:none;">
+            <i class="fas fa-sign-in-alt" id="btn-icon"></i><span id="btn-text">Sign In</span>
+          </button>
+        </form>
+
+        <p class="login-err" id="login-error"></p>
+
+        <!-- Footer links -->
+        <div id="user-footer" style="text-align:center;margin-top:20px;padding-top:16px;border-top:1px solid var(--glass-border);">
+          <p style="font-size:0.82rem;color:var(--text-dim);">Don't have an account? <a href="signup.html" style="color:var(--nebula-cyan);font-weight:600;">Create one free →</a></p>
+          <a href="index.html" style="font-size:0.78rem;color:var(--text-dim);text-decoration:none;display:inline-block;margin-top:8px;">← Back to Portfolio</a>
+        </div>
+        <div id="admin-footer" style="text-align:center;margin-top:20px;padding-top:16px;border-top:1px solid var(--glass-border);display:none;">
+          <a href="index.html" style="font-size:0.82rem;color:var(--text-dim);text-decoration:none;">← Back to Public Site</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="assets/js/three-background.js"></script>
+  <script src="assets/js/main.js"></script>
+
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js';
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js';
+
+    const ADMIN_EMAIL = 'abhinashpanday911842@gmail.com';
+
+    const firebaseConfig = {
+      apiKey: 'AIzaSyAmxOp3FEn0reR_C_IalXLfTsMlfUOK_zU',
+      authDomain: 'website-157e5.firebaseapp.com',
+      projectId: 'website-157e5',
+      storageBucket: 'website-157e5.firebasestorage.app',
+      messagingSenderId: '1080679724720',
+      appId: '1:1080679724720:web:b65f34a44ae8f390a72d75'
+    };
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    let currentMode = 'user';
+
+    // Redirect if already logged in (sessionStorage based)
+    onAuthStateChanged(auth, (user) => {
+      if (!user) return;
+      // If admin is already logged in, send to dashboard
+      if (user.email === ADMIN_EMAIL && sessionStorage.getItem('isAdmin')) {
+        window.location.href = 'dashboard.html';
+        return;
+      }
+      // If regular user is already logged in, send to home
+      if (sessionStorage.getItem('loggedIn')) {
+        window.location.href = 'index.html';
+        return;
+      }
+    });
+
+    // Expose switchMode globally
+    window.switchMode = function(mode) {
+      currentMode = mode;
+      const pill = document.getElementById('mode-pill');
+      const btnUser = document.getElementById('btn-user');
+      const btnAdmin = document.getElementById('btn-admin');
+      const submitBtn = document.getElementById('submit-btn');
+      const adminNotice = document.getElementById('admin-notice');
+      const userFooter = document.getElementById('user-footer');
+      const adminFooter = document.getElementById('admin-footer');
+      const title = document.getElementById('form-title');
+      const subtitle = document.getElementById('form-subtitle');
+      const errEl = document.getElementById('login-error');
+      errEl.textContent = '';
+      document.getElementById('email').value = '';
+      document.getElementById('password').value = '';
+
+      if (mode === 'user') {
+        pill.className = 'mode-pill user-side';
+        btnUser.classList.add('active-user');
+        btnAdmin.classList.remove('active-admin');
+        submitBtn.className = 'neon-btn neon-btn-solid btn-user';
+        submitBtn.style.cssText = 'width:100%;justify-content:center;font-size:1rem;padding:14px;border:none;';
+        adminNotice.style.display = 'none';
+        userFooter.style.display = '';
+        adminFooter.style.display = 'none';
+        title.textContent = 'Welcome Back';
+        subtitle.textContent = 'Sign in to access the portfolio';
+        document.getElementById('btn-icon').className = 'fas fa-sign-in-alt';
+        document.getElementById('btn-text').textContent = 'Sign In';
+      } else {
+        pill.className = 'mode-pill admin-side';
+        btnAdmin.classList.add('active-admin');
+        btnUser.classList.remove('active-user');
+        submitBtn.className = 'neon-btn neon-btn-solid btn-admin';
+        submitBtn.style.cssText = 'width:100%;justify-content:center;font-size:1rem;padding:14px;border:none;';
+        adminNotice.style.display = 'flex';
+        userFooter.style.display = 'none';
+        adminFooter.style.display = '';
+        title.textContent = 'Admin Access';
+        subtitle.textContent = 'Restricted — site owner only';
+        document.getElementById('btn-icon').className = 'fas fa-shield-alt';
+        document.getElementById('btn-text').textContent = 'Access Admin Panel';
+      }
+    };
+
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const btn = document.getElementById('submit-btn');
+      const errEl = document.getElementById('login-error');
+      errEl.textContent = '';
+
+      if (!email || !password) {
+        errEl.textContent = 'Please fill in all fields.';
+        return;
+      }
+
+      btn.disabled = true;
+      const origHTML = btn.innerHTML;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>Verifying...</span>';
+
+      try {
+        const cred = await signInWithEmailAndPassword(auth, email, password);
+        const user = cred.user;
+
+        if (currentMode === 'admin') {
+          // Check admin email after successful Firebase login
+          if (user.email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
+            await auth.signOut();
+            errEl.textContent = '🔒 Access denied. This panel is for site owner only.';
+            btn.disabled = false;
+            btn.innerHTML = origHTML;
+            return;
+          }
+          sessionStorage.setItem('isAdmin', '1');
+          sessionStorage.setItem('adminUser', JSON.stringify({ name: user.displayName || 'Admin', email: user.email }));
+          btn.innerHTML = '<i class="fas fa-check"></i><span>Welcome, Admin!</span>';
+          setTimeout(() => { window.location.href = 'dashboard.html'; }, 800);
+        } else {
+          // Regular user login
+          sessionStorage.setItem('loggedIn', '1');
+          sessionStorage.setItem('user', JSON.stringify({ name: user.displayName || email.split('@')[0], email: user.email }));
+          btn.innerHTML = '<i class="fas fa-check"></i><span>Welcome back!</span>';
+          setTimeout(() => { window.location.href = 'index.html'; }, 800);
+        }
+      } catch (err) {
+        btn.disabled = false;
+        btn.innerHTML = origHTML;
+        const msgMap = {
+          'auth/invalid-credential': 'Invalid email or password.',
+          'auth/user-not-found': 'No account found with this email.',
+          'auth/wrong-password': 'Incorrect password.',
+          'auth/too-many-requests': 'Too many attempts. Please try again later.',
+          'auth/operation-not-allowed': '⚠️ Email/Password is not enabled in Firebase Console. Go to Authentication → Sign-in method → Enable Email/Password.'
+        };
+        errEl.textContent = msgMap[err.code] || err.message;
+      }
+    });
+
+    document.getElementById('pw-toggle').addEventListener('click', function() {
+      const pw = document.getElementById('password');
+      const ic = this.querySelector('i');
+      pw.type = pw.type === 'password' ? 'text' : 'password';
+      ic.className = pw.type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
+    });
+  </script>
+</body>
+</html>

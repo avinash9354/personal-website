@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avinash Pandey</title>
+  <meta name="description"
+    content="Avinash Pandey — Full Stack Developer specializing in AI, 3D Web Experiences and scalable applications.">
+  <meta name="keywords"
+    content="Full Stack Developer, AI Engineer, React, Node.js, Three.js, Portfolio, Avinash Pandey">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="assets/js/route-guard.js"></script>
+</head>
+
+<body>
+  <!-- Cursor Glow (injected by JS) -->
+
+  <!-- Three.js Canvas -->
+  <canvas id="three-canvas"></canvas>
+
+  <!-- Page Loader -->
+  <div class="page-loader" id="page-loader">
+    <div class="loader-logo">AVINASH</div>
+    <div class="loader-bar-wrap">
+      <div class="loader-bar"></div>
+    </div>
+    <div class="loader-text">Loading...</div>
+  </div>
+
+  <!-- Floating Nav -->
+  <nav class="floating-nav" id="floating-nav">
+    <a href="index.html" class="nav-logo">AP</a>
+    <a href="index.html" class="active">Home</a>
+    <a href="about.html">About</a>
+    <a href="skills.html">Skills</a>
+    <a href="projects.html">Projects</a>
+    <a href="experience.html">Experience</a>
+    <a href="blog.html">Blog</a>
+    <a href="services.html">Services</a>
+    <a href="contact.html">Contact</a>
+    <a href="login.html" class="auth-link">Login</a>
+    <a href="dashboard.html" class="user-link" style="display:none">Dashboard</a>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="index.html">🏠 Home</a>
+    <a href="about.html">👤 About</a>
+    <a href="skills.html">⚡ Skills</a>
+    <a href="projects.html">🚀 Projects</a>
+    <a href="experience.html">💼 Experience</a>
+    <a href="blog.html">✍️ Blog</a>
+    <a href="services.html">🛠 Services</a>
+    <a href="contact.html">📬 Contact</a>
+    <a href="login.html">🔐 Login</a>
+  </div>
+
+  <!-- Theme Toggle -->
+  <div class="theme-toggle" id="theme-toggle"><i class="fas fa-moon"></i></div>
+  <!-- Back to Top -->
+  <button class="back-to-top" id="back-to-top"><i class="fas fa-chevron-up"></i></button>
+
+  <!-- ====== HERO SECTION ====== -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="hero-grid">
+        <!-- Left: Intro -->
+        <div class="hero-content">
+          <div class="section-tag reveal">👋 Hello World</div>
+          <h1 class="reveal"
+            style="font-family:'Orbitron',monospace;font-size:clamp(2.5rem,5vw,4.5rem);font-weight:900;line-height:1.05;margin:16px 0 10px;letter-spacing:-2px;">
+            I'm <span class="gradient-text">Avinash<br>Pandey</span>
+          </h1>
+          <div class="reveal" style="font-size:1.5rem;font-weight:600;margin-bottom:20px;color:var(--text-secondary);">
+            A <span class="gradient-text" id="typed-text"></span><span class="animate-blink"
+              style="color:var(--nebula-cyan);">|</span>
+          </div>
+          <p class="reveal"
+            style="font-size:1rem;color:var(--text-secondary);line-height:1.8;max-width:480px;margin-bottom:32px;">
+            Crafting pixel-perfect web experiences powered by cutting-edge AI, immersive 3D visuals, and scalable
+            architecture. Turning bold ideas into stunning digital realities.
+          </p>
+          <div class="reveal hero-btns" style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:36px;">
+            <a href="projects.html" class="neon-btn neon-btn-lg"><i class="fas fa-rocket"></i><span>View
+                Projects</span></a>
+            <a href="hire.html" class="neon-btn neon-btn-lg neon-btn-purple"><i class="fas fa-handshake"></i><span>Hire
+                Me</span></a>
+          </div>
+          <div class="social-links reveal">
+            <a href="https://github.com/" target="_blank" class="social-link"><i class="fab fa-github"></i></a>
+            <a href="https://linkedin.com/" target="_blank" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://twitter.com/" target="_blank" class="social-link"><i class="fab fa-twitter"></i></a>
+            <a href="https://youtube.com/" target="_blank" class="social-link"><i class="fab fa-youtube"></i></a>
+            <a href="mailto:avinash@dev.com" class="social-link"><i class="fas fa-envelope"></i></a>
+          </div>
+        </div>
+
+        <!-- Right: Profile Photo -->
+        <div class="hero-visual reveal animate-float">
+          <div class="hero-photo-wrap">
+            <img src="assets/images/Profile.PNG" alt="Avinash Pandey" class="hero-profile-img">
+            <div class="hero-photo-overlay"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== STATS STRIP ====== -->
+  <section style="padding:60px 20px;position:relative;z-index:1;">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;">
+        <div class="glass-card reveal" style="text-align:center;padding:28px 16px;">
+          <div class="stat-number gradient-text" data-counter data-target="50" data-suffix="+">0+</div>
+          <div class="stat-label">Projects Built</div>
+        </div>
+        <div class="glass-card reveal glass-card-purple" style="text-align:center;padding:28px 16px;">
+          <div class="stat-number gradient-text-pink" data-counter data-target="5" data-suffix="Y">0Y</div>
+          <div class="stat-label">Experience</div>
+        </div>
+        <div class="glass-card reveal" style="text-align:center;padding:28px 16px;">
+          <div class="stat-number gradient-text" data-counter data-target="30" data-suffix="+">0+</div>
+          <div class="stat-label">Happy Clients</div>
+        </div>
+        <div class="glass-card reveal glass-card-pink" style="text-align:center;padding:28px 16px;">
+          <div class="stat-number gradient-text-gold" data-counter data-target="15" data-suffix="+">0+</div>
+          <div class="stat-label">Awards Won</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== FEATURED PROJECTS ====== -->
+  <section style="padding:80px 20px;position:relative;z-index:1;">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag reveal">Portfolio Highlights</div>
+        <h2 class="section-title reveal">Featured <span class="gradient-text">Projects</span></h2>
+        <p class="section-subtitle reveal">Handpicked work showcasing innovation, design excellence and technical depth.
+        </p>
+      </div>
+      <div class="grid-3" id="featured-projects-grid">
+        <!-- Project cards -->
+        <div class="glass-card tilt reveal">
+          <div
+            style="width:100%;height:160px;border-radius:14px;background:linear-gradient(135deg,rgba(0,245,255,0.3),rgba(179,0,255,0.3));display:flex;align-items:center;justify-content:center;font-size:3rem;margin-bottom:20px;">
+            🤖</div>
+          <span class="tag tag-purple" style="margin-bottom:10px;display:inline-block;">AI/ML</span>
+          <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:8px;">AI Portfolio Assistant</h3>
+          <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:16px;line-height:1.6;">GPT-4 powered
+            chatbot that answers visitor questions about skills and experience in real-time.</p>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px;"><span
+              class="tag tag-cyan">React</span><span class="tag tag-blue">OpenAI</span><span
+              class="tag tag-gold">Node.js</span></div>
+          <div style="display:flex;gap:10px;"><a href="projects.html" class="neon-btn neon-btn-sm"><i
+                class="fas fa-eye"></i><span>View</span></a><a href="https://github.com/avinashpandey" target="_blank"
+              class="neon-btn neon-btn-sm neon-btn-purple"><i class="fab fa-github"></i><span>Code</span></a></div>
+        </div>
+        <div class="glass-card tilt reveal glass-card-purple">
+          <div
+            style="width:100%;height:160px;border-radius:14px;background:linear-gradient(135deg,rgba(179,0,255,0.3),rgba(255,0,110,0.3));display:flex;align-items:center;justify-content:center;font-size:3rem;margin-bottom:20px;">
+            🌐</div>
+          <span class="tag tag-cyan" style="margin-bottom:10px;display:inline-block;">Web</span>
+          <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:8px;">3D Interactive Dashboard</h3>
+          <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:16px;line-height:1.6;">Real-time
+            analytics dashboard with WebGL-powered 3D visualizations for enterprise data.</p>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px;"><span
+              class="tag tag-cyan">Three.js</span><span class="tag tag-pink">D3.js</span><span
+              class="tag tag-gold">WebGL</span></div>
+          <div style="display:flex;gap:10px;"><a href="projects.html" class="neon-btn neon-btn-sm"><i
+                class="fas fa-eye"></i><span>View</span></a><a href="https://github.com/avinashpandey" target="_blank"
+              class="neon-btn neon-btn-sm neon-btn-purple"><i class="fab fa-github"></i><span>Code</span></a></div>
+        </div>
+        <div class="glass-card tilt reveal glass-card-pink">
+          <div
+            style="width:100%;height:160px;border-radius:14px;background:linear-gradient(135deg,rgba(0,102,255,0.3),rgba(0,245,255,0.3));display:flex;align-items:center;justify-content:center;font-size:3rem;margin-bottom:20px;">
+            ⛓</div>
+          <span class="tag tag-gold" style="margin-bottom:10px;display:inline-block;">Blockchain</span>
+          <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:8px;">Blockchain Voting System</h3>
+          <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:16px;line-height:1.6;">Decentralized
+            voting platform on Ethereum with immutable records and transparent results.</p>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px;"><span
+              class="tag tag-purple">Solidity</span><span class="tag tag-cyan">Web3.js</span><span
+              class="tag tag-blue">IPFS</span></div>
+          <div style="display:flex;gap:10px;"><a href="projects.html" class="neon-btn neon-btn-sm"><i
+                class="fas fa-eye"></i><span>View</span></a><a href="https://github.com/avinashpandey" target="_blank"
+              class="neon-btn neon-btn-sm neon-btn-purple"><i class="fab fa-github"></i><span>Code</span></a></div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:40px;">
+        <a href="projects.html" class="neon-btn neon-btn-lg"><i class="fas fa-th-large"></i><span>View All
+            Projects</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== SERVICES PREVIEW ====== -->
+  <section style="padding:80px 20px;position:relative;z-index:1;">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag reveal">What I Do</div>
+        <h2 class="section-title reveal">My <span class="gradient-text-pink">Services</span></h2>
+      </div>
+      <div class="grid-4" style="gap:20px;">
+        <div class="glass-card reveal" style="text-align:center;padding:28px 20px;">
+          <div
+            style="width:60px;height:60px;margin:0 auto 16px;border-radius:16px;background:rgba(0,245,255,0.1);display:flex;align-items:center;justify-content:center;font-size:1.8rem;">
+            💻</div>
+          <h4 style="font-weight:700;margin-bottom:8px;font-size:0.95rem;">Full Stack Dev</h4>
+          <p style="font-size:0.8rem;color:var(--text-secondary);">End-to-end web apps with React, Node.js and scalable
+            databases.</p>
+        </div>
+        <div class="glass-card reveal glass-card-purple" style="text-align:center;padding:28px 20px;">
+          <div
+            style="width:60px;height:60px;margin:0 auto 16px;border-radius:16px;background:rgba(179,0,255,0.1);display:flex;align-items:center;justify-content:center;font-size:1.8rem;">
+            🤖</div>
+          <h4 style="font-weight:700;margin-bottom:8px;font-size:0.95rem;">AI/ML Solutions</h4>
+          <p style="font-size:0.8rem;color:var(--text-secondary);">Custom AI models, chatbots and intelligent automation
+            systems.</p>
+        </div>
+        <div class="glass-card reveal" style="text-align:center;padding:28px 20px;">
+          <div
+            style="width:60px;height:60px;margin:0 auto 16px;border-radius:16px;background:rgba(255,0,110,0.1);display:flex;align-items:center;justify-content:center;font-size:1.8rem;">
+            🌌</div>
+          <h4 style="font-weight:700;margin-bottom:8px;font-size:0.95rem;">3D Experiences</h4>
+          <p style="font-size:0.8rem;color:var(--text-secondary);">Immersive Three.js and WebGL-powered interactive 3D
+            websites.</p>
+        </div>
+        <div class="glass-card reveal glass-card-pink" style="text-align:center;padding:28px 20px;">
+          <div
+            style="width:60px;height:60px;margin:0 auto 16px;border-radius:16px;background:rgba(255,215,0,0.1);display:flex;align-items:center;justify-content:center;font-size:1.8rem;">
+            ☁️</div>
+          <h4 style="font-weight:700;margin-bottom:8px;font-size:0.95rem;">Cloud & DevOps</h4>
+          <p style="font-size:0.8rem;color:var(--text-secondary);">AWS, Docker, CI/CD pipelines and cloud architecture
+            design.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== CTA ====== -->
+  <section style="padding:80px 20px;position:relative;z-index:1;">
+    <div class="container">
+      <div class="glass-card reveal"
+        style="text-align:center;padding:70px 40px;background:linear-gradient(135deg,rgba(0,245,255,0.04),rgba(179,0,255,0.06));border-color:rgba(0,245,255,0.15);">
+        <div class="section-tag">Let's Build Together</div>
+        <h2 class="section-title" style="margin:16px 0;">Have a <span class="gradient-text">Project</span> in Mind?</h2>
+        <p style="color:var(--text-secondary);max-width:500px;margin:0 auto 36px;font-size:1rem;">Whether it's a startup
+          MVP or enterprise-level solution, I bring ideas to life with precision and creativity.</p>
+        <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+          <a href="hire.html" class="neon-btn neon-btn-solid neon-btn-lg"><i class="fas fa-rocket"></i><span>Start a
+              Project</span></a>
+          <a href="contact.html" class="neon-btn neon-btn-lg"><i class="fas fa-envelope"></i><span>Get in
+              Touch</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== FOOTER ====== -->
+  <footer>
+    <div class="footer-content">
+      <div>
+        <div class="footer-brand-name gradient-text">Avinash Pandey</div>
+        <p class="footer-desc">Full Stack Developer & AI Engineer crafting the future of the web, one pixel at a time.
+        </p>
+        <div class="social-links">
+          <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="footer-column">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="skills.html">Skills</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="experience.html">Experience</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="services.html">Full Stack Dev</a></li>
+          <li><a href="services.html">AI/ML Solutions</a></li>
+          <li><a href="services.html">3D Experiences</a></li>
+          <li><a href="services.html">Consulting</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="hire.html">Hire Me</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="login.html">Dashboard</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 <span>Avinash Pandey</span>. Crafted with <span>♥</span> & Three.js</div>
+      <div style="display:flex;gap:16px;"><a href="#"
+          style="color:var(--text-dim);font-size:0.8rem;text-decoration:none;">Privacy</a><a href="#"
+          style="color:var(--text-dim);font-size:0.8rem;text-decoration:none;">Terms</a></div>
+    </div>
+  </footer>
+
+  <!-- Chatbot FAB -->
+  <button class="chatbot-fab" id="chatbot-fab"><i class="fas fa-robot"></i></button>
+  <div class="chatbot-panel" id="chatbot-panel">
+    <div class="chatbot-header">
+      <div class="chatbot-avatar">🌎</div>
+      <div class="chatbot-info">
+        <h4>AI Assistant</h4>
+        <div class="status">Online</div>
+      </div>
+      <button class="chatbot-close" id="chatbot-close"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="chatbot-messages" id="chatbot-messages"></div>
+    <div class="chatbot-input-row">
+      <input class="chatbot-input-field" id="chatbot-input-field" placeholder="Ask about Avinash…">
+      <button class="chatbot-send" id="chatbot-send"><i class="fas fa-paper-plane"></i></button>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="assets/js/three-background.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+
+
+</body>
+
+</html>

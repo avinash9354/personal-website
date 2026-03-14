@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skills — Avinash Pandey</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .tech-icon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 16px; }
+    .tech-icon-card { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 16px; padding: 20px 12px; text-align: center; transition: var(--transition); cursor: default; }
+    .tech-icon-card:hover { border-color: var(--nebula-cyan); transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,245,255,0.15); }
+    .tech-icon-card .icon { font-size: 2rem; margin-bottom: 8px; display: block; }
+    .tech-icon-card .name { font-size: 0.72rem; color: var(--text-secondary); font-weight: 600; letter-spacing: 0.5px; }
+  </style>
+  <script src="assets/js/route-guard.js"></script>
+</head>
+<body>
+  <canvas id="three-canvas"></canvas>
+  <div class="page-loader" id="page-loader"><div class="loader-logo">SKILLS</div><div class="loader-bar-wrap"><div class="loader-bar"></div></div><div class="loader-text">Loading...</div></div>
+
+  <nav class="floating-nav">
+    <a href="index.html" class="nav-logo">AP</a>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="skills.html" class="active">Skills</a>
+    <a href="projects.html">Projects</a>
+    <a href="experience.html">Experience</a>
+    <a href="contact.html">Contact</a>
+    <button class="nav-hamburger" id="nav-hamburger"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="index.html">🏠 Home</a><a href="about.html">👤 About</a><a href="skills.html" class="active">⚡ Skills</a><a href="projects.html">🚀 Projects</a><a href="contact.html">📬 Contact</a>
+  </div>
+  <div class="theme-toggle" id="theme-toggle"><i class="fas fa-moon"></i></div>
+  <button class="back-to-top" id="back-to-top"><i class="fas fa-chevron-up"></i></button>
+
+  <!-- HERO -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag reveal">Technical Arsenal</div>
+        <h1 class="section-title reveal">My <span class="gradient-text">Skills</span></h1>
+        <p class="section-subtitle reveal">A comprehensive toolkit built over 5+ years of shipping production-ready products across diverse domains.</p>
+      </div>
+
+      <!-- Skill Bars -->
+      <div class="grid-2" style="gap:50px;margin-top:60px;">
+        <div>
+          <h3 class="reveal" style="font-family:'Orbitron',monospace;font-size:1rem;letter-spacing:2px;color:var(--nebula-cyan);margin-bottom:28px;">FRONTEND</h3>
+          <div class="skill-bar-wrap reveal"><div class="skill-bar-header"><span class="skill-bar-name">React.js / Next.js</span><span class="skill-bar-pct">95%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="95"></div></div></div>
+          <div class="skill-bar-wrap reveal"><div class="skill-bar-header"><span class="skill-bar-name">Three.js / WebGL</span><span class="skill-bar-pct">88%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="88" style="background:var(--grad-purple);"></div></div></div>
+          <div class="skill-bar-wrap reveal"><div class="skill-bar-header"><span class="skill-bar-name">TypeScript</span><span class="skill-bar-pct">90%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="90"></div></div></div>
+          <div class="skill-bar-wrap reveal"><div class="skill-bar-header"><span class="skill-bar-name">CSS / Animations</span><span class="skill-bar-pct">93%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="93" style="background:linear-gradient(90deg,var(--nebula-pink),var(--nebula-purple));"></div></div></div>
+          <div class="skill-bar-wrap reveal"><div class="skill-bar-header"><span class="skill-bar-name">Vue.js / Svelte</span><span class="skill-bar-pct">75%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="75" style="background:var(--grad-gold);"></div></div></div>
+        </div>
+        <div>
+          <h3 class="reveal" style="font-family:'Orbitron',monospace;font-size:1rem;letter-spacing:2px;color:var(--nebula-purple);margin-bottom:28px;">BACKEND & AI</h3>
+          <div class="skill-bar-wrap reveal"><div class="skill-bar-header"><span class="skill-bar-name">Node.js / Express</span><span class="skill-bar-pct">92%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="92" style="background:var(--grad-purple);"></div></div></div>
+          <div class="skill-bar-wrap reveal"><div class="skill-bar-header"><span class="skill-bar-name">Python / FastAPI</span><span class="skill-bar-pct">87%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="87"></div></div></div>
+          <div class="skill-bar-wrap reveal"><div class="skill-bar-header"><span class="skill-bar-name">TensorFlow / PyTorch</span><span class="skill-bar-pct">80%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="80" style="background:var(--grad-gold);"></div></div></div>
+          <div class="skill-bar-wrap reveal"><div class="skill-bar-header"><span class="skill-bar-name">MongoDB / PostgreSQL</span><span class="skill-bar-pct">88%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="88" style="background:linear-gradient(90deg,var(--nebula-pink),var(--nebula-purple));"></div></div></div>
+          <div class="skill-bar-wrap reveal"><div class="skill-bar-header"><span class="skill-bar-name">AWS / Docker / K8s</span><span class="skill-bar-pct">82%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="82"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tech Icons -->
+  <section style="padding:80px 20px;position:relative;z-index:1;">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag reveal">Tools & Tech</div>
+        <h2 class="section-title reveal">Full <span class="gradient-text-pink">Tech Stack</span></h2>
+      </div>
+      <div class="tech-icon-grid">
+        <div class="tech-icon-card reveal"><span class="icon">⚛️</span><span class="name">React</span></div>
+        <div class="tech-icon-card reveal"><span class="icon">🟢</span><span class="name">Node.js</span></div>
+        <div class="tech-icon-card reveal"><span class="icon">🐍</span><span class="name">Python</span></div>
+        <div class="tech-icon-card reveal"><span class="icon">🌌</span><span class="name">Three.js</span></div>
+        <div class="tech-icon-card reveal"><span class="icon">🔷</span><span class="name">TypeScript</span></div>
+        <div class="tech-icon-card reveal"><span class="icon">🍃</span><span class="name">MongoDB</span></div>
+        <div class="tech-icon-card reveal"><span class="icon">🐘</span><span class="name">PostgreSQL</span></div>
+        <div class="tech-icon-card reveal"><span class="icon">☁️</span><span class="name">AWS</span></div>
+        <div class="tech-icon-card reveal"><span class="icon">🐳</span><span class="name">Docker</span></div>
+        <div class="tech-icon-card reveal"><span class="icon">☸️</span><span class="name">Kubernetes</span></div>
+        <div class="tech-icon-card reveal"><span class="icon">🔥</span><span class="name">TensorFlow</span></div>
+        <div class="tech-icon-card reveal"><span class="icon">🔴</span><span class="name">Redis</span></div>
+        <div class="tech-icon-card reveal"><span class="icon">⛓️</span><span class="name">Solidity</span></div>
+        <div class="tech-icon-card reveal"><span class="icon">🦀</span><span class="name">GraphQL</span></div>
+        <div class="tech-icon-card reveal"><span class="icon">🔁</span><span class="name">Socket.io</span></div>
+        <div class="tech-icon-card reveal"><span class="icon">🐙</span><span class="name">GitHub</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skill Categories -->
+  <section style="padding:80px 20px;position:relative;z-index:1;">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag reveal">Expertise Areas</div>
+        <h2 class="section-title reveal">Skill <span class="gradient-text">Categories</span></h2>
+      </div>
+      <div class="grid-3" style="gap:24px;">
+        <div class="glass-card reveal" style="padding:28px;">
+          <div style="font-size:2rem;margin-bottom:14px;">💻</div>
+          <h3 style="color:var(--nebula-cyan);font-size:1rem;font-weight:700;margin-bottom:12px;font-family:'Orbitron',monospace;letter-spacing:1px;">Frontend</h3>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <span class="tag tag-cyan">React</span><span class="tag tag-cyan">Next.js</span><span class="tag tag-cyan">Three.js</span><span class="tag tag-cyan">GSAP</span><span class="tag tag-cyan">TypeScript</span><span class="tag tag-cyan">Vue.js</span>
+          </div>
+        </div>
+        <div class="glass-card reveal glass-card-purple" style="padding:28px;">
+          <div style="font-size:2rem;margin-bottom:14px;">🔧</div>
+          <h3 style="color:var(--nebula-purple);font-size:1rem;font-weight:700;margin-bottom:12px;font-family:'Orbitron',monospace;letter-spacing:1px;">Backend</h3>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <span class="tag tag-purple">Node.js</span><span class="tag tag-purple">Python</span><span class="tag tag-purple">FastAPI</span><span class="tag tag-purple">GraphQL</span><span class="tag tag-purple">Redis</span><span class="tag tag-purple">Socket.io</span>
+          </div>
+        </div>
+        <div class="glass-card reveal" style="padding:28px;">
+          <div style="font-size:2rem;margin-bottom:14px;">🤖</div>
+          <h3 style="color:var(--nebula-pink);font-size:1rem;font-weight:700;margin-bottom:12px;font-family:'Orbitron',monospace;letter-spacing:1px;">AI / ML</h3>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <span class="tag tag-pink">TensorFlow</span><span class="tag tag-pink">PyTorch</span><span class="tag tag-pink">OpenAI</span><span class="tag tag-pink">LangChain</span><span class="tag tag-pink">Hugging Face</span>
+          </div>
+        </div>
+        <div class="glass-card reveal" style="padding:28px;">
+          <div style="font-size:2rem;margin-bottom:14px;">🗄️</div>
+          <h3 style="color:var(--nebula-gold);font-size:1rem;font-weight:700;margin-bottom:12px;font-family:'Orbitron',monospace;letter-spacing:1px;">Databases</h3>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <span class="tag tag-gold">MongoDB</span><span class="tag tag-gold">PostgreSQL</span><span class="tag tag-gold">Redis</span><span class="tag tag-gold">MySQL</span><span class="tag tag-gold">Supabase</span>
+          </div>
+        </div>
+        <div class="glass-card reveal glass-card-purple" style="padding:28px;">
+          <div style="font-size:2rem;margin-bottom:14px;">☁️</div>
+          <h3 style="color:var(--nebula-cyan);font-size:1rem;font-weight:700;margin-bottom:12px;font-family:'Orbitron',monospace;letter-spacing:1px;">Cloud & DevOps</h3>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <span class="tag tag-blue">AWS</span><span class="tag tag-blue">Docker</span><span class="tag tag-blue">K8s</span><span class="tag tag-blue">GitHub Actions</span><span class="tag tag-blue">Nginx</span>
+          </div>
+        </div>
+        <div class="glass-card reveal" style="padding:28px;">
+          <div style="font-size:2rem;margin-bottom:14px;">⛓️</div>
+          <h3 style="color:var(--nebula-purple);font-size:1rem;font-weight:700;margin-bottom:12px;font-family:'Orbitron',monospace;letter-spacing:1px;">Blockchain</h3>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <span class="tag tag-purple">Solidity</span><span class="tag tag-purple">Web3.js</span><span class="tag tag-purple">Hardhat</span><span class="tag tag-purple">IPFS</span><span class="tag tag-purple">Ethereum</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-bottom" style="max-width:1200px;margin:0 auto;">
+      <div class="footer-copy">© 2026 <span>Avinash Pandey</span>. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <button class="chatbot-fab" id="chatbot-fab"><i class="fas fa-robot"></i></button>
+  <div class="chatbot-panel" id="chatbot-panel">
+    <div class="chatbot-header"><div class="chatbot-avatar">🤖</div><div class="chatbot-info"><h4>Nova — AI Assistant</h4><div class="status">Online</div></div><button class="chatbot-close" id="chatbot-close"><i class="fas fa-times"></i></button></div>
+    <div class="chatbot-messages" id="chatbot-messages"></div>
+    <div class="chatbot-input-row"><input class="chatbot-input-field" id="chatbot-input-field" placeholder="Ask about Avinash…"><button class="chatbot-send" id="chatbot-send"><i class="fas fa-paper-plane"></i></button></div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="assets/js/three-background.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

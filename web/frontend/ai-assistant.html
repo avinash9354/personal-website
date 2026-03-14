@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Assistant — Avinash Pandey</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/dashboard.css">
+</head>
+<body class="admin-body">
+  <canvas id="three-canvas"></canvas>
+  <div class="dashboard-layout">
+    <aside class="sidebar">
+      <div class="sidebar-brand"><a href="index.html" class="sidebar-logo">AVINASH.DEV</a><span class="sidebar-tagline">ADMIN PANEL</span></div>
+      <div class="sidebar-profile"><div class="sidebar-avatar"><img src="assets/images/profile.png" alt="Avinash"><span class="online-dot"></span></div><div><span class="sidebar-user-name">Avinash Pandey</span><span class="sidebar-user-role">Administrator</span></div></div>
+      <nav class="sidebar-nav">
+        <div class="sidebar-nav-section"><div class="sidebar-nav-section-title">Main</div>
+          <a href="dashboard.html" class="sidebar-link"><i class="fas fa-th-large"></i>Dashboard</a>
+          <a href="profile.html" class="sidebar-link"><i class="fas fa-user-circle"></i>Profile</a>
+          <a href="messages.html" class="sidebar-link"><i class="fas fa-envelope"></i>Messages</a>
+          <a href="projects.html" class="sidebar-link"><i class="fas fa-rocket"></i>Projects</a>
+        </div>
+        <div class="sidebar-nav-section"><div class="sidebar-nav-section-title">Tools</div>
+          <a href="ai-assistant.html" class="sidebar-link active"><i class="fas fa-robot"></i>AI Assistant</a>
+          <a href="settings.html" class="sidebar-link"><i class="fas fa-cog"></i>Settings</a>
+          <a href="index.html" class="sidebar-link"><i class="fas fa-globe"></i>View Site</a>
+          <a href="login.html" id="logout-btn" class="sidebar-link"><i class="fas fa-sign-out-alt"></i>Logout</a>
+        </div>
+      </nav>
+    </aside>
+    <main class="dashboard-main"><div class="dash-mobile-toggle" id="dash-mobile-toggle"><i class="fas fa-bars"></i></div>
+      <div class="dash-topbar">
+        <div class="dash-topbar-left"><h1>AI Assistant</h1><p>Powered by GPT-4 — your intelligent portfolio companion</p></div>
+        <div class="dash-topbar-right"><button class="neon-btn neon-btn-sm" onclick="clearChat()"><i class="fas fa-trash"></i><span>Clear Chat</span></button></div>
+      </div>
+
+      <div class="ai-chat-layout">
+        <!-- Sidebar: Prompts -->
+        <div class="ai-sidebar">
+          <div class="dash-chart-card" style="padding:20px;">
+            <div class="dash-chart-title" style="margin-bottom:14px;">Suggested Prompts</div>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <button class="filter-btn" onclick="sendPrompt('Write a professional bio for Avinash')" style="text-align:left;white-space:normal;border-radius:12px;padding:10px 14px;">✍️ Write my bio</button>
+              <button class="filter-btn" onclick="sendPrompt('Suggest project ideas for my portfolio')" style="text-align:left;white-space:normal;border-radius:12px;padding:10px 14px;">💡 Suggest projects</button>
+              <button class="filter-btn" onclick="sendPrompt('Help me write a client proposal')" style="text-align:left;white-space:normal;border-radius:12px;padding:10px 14px;">📝 Write a proposal</button>
+              <button class="filter-btn" onclick="sendPrompt('How do I improve my portfolio SEO?')" style="text-align:left;white-space:normal;border-radius:12px;padding:10px 14px;">🔍 SEO tips</button>
+              <button class="filter-btn" onclick="sendPrompt('What skills should I learn next?')" style="text-align:left;white-space:normal;border-radius:12px;padding:10px 14px;">🚀 Skills to learn</button>
+              <button class="filter-btn" onclick="sendPrompt('Help me set my freelance rates')" style="text-align:left;white-space:normal;border-radius:12px;padding:10px 14px;">💰 Set my rates</button>
+            </div>
+          </div>
+          <div class="dash-chart-card" style="padding:20px;">
+            <div class="dash-chart-title" style="margin-bottom:14px;">AI Status</div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><span style="width:8px;height:8px;border-radius:50%;background:#00ff88;animation:blink 1.5s infinite;display:inline-block;"></span><span id="ai-status-text" style="font-size:0.82rem;font-weight:600;color:#00ff88;">Online</span></div>
+            <div id="ai-status-model" style="font-size:0.78rem;color:var(--text-dim);">Model: GPT-4 Turbo</div>
+            <div id="ai-status-context" style="font-size:0.78rem;color:var(--text-dim);margin-top:4px;">Context: 128K tokens</div>
+          </div>
+          
+          <div class="dash-chart-card" style="padding:20px; margin-top:12px;">
+            <div class="dash-chart-title" style="margin-bottom:14px;">Contact Options</div>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <button id="live-chat-toggle" class="neon-btn neon-btn-sm" onclick="toggleLiveChat()" style="width:100%; justify-content:center;">
+                <i class="fas fa-headset"></i><span>Switch to Live Chat</span>
+              </button>
+              <a href="https://wa.me/1234567890?text=Hi%20Avinash,%20I%20saw%20your%20portfolio..." target="_blank" class="neon-btn neon-btn-sm neon-btn-gold" style="width:100%; justify-content:center;">
+                <i class="fab fa-whatsapp" style="font-size: 1.1rem;"></i><span>Contact via WhatsApp</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chat Area -->
+        <div class="ai-chat-main">
+          <div class="ai-chat-header">
+            <div class="ai-avatar" id="chat-header-avatar">🤖</div>
+            <div><div id="chat-header-name" style="font-weight:700;">AI Assistant</div><div id="chat-header-status" style="font-size:0.78rem;color:var(--nebula-cyan);">Powered by GPT-4 Turbo · Always online</div></div>
+          </div>
+
+          <div class="ai-messages" id="ai-messages">
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div id="welcome-avatar" style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--nebula-cyan),var(--nebula-purple));display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">🤖</div>
+              <div id="welcome-message" class="chat-bubble bot" style="max-width:80%;">👋 Hi Avinash! I'm Nova, your AI portfolio assistant. I can help you write content, draft proposals, suggest project ideas, answer career questions, and much more. What would you like help with today?</div>
+            </div>
+          </div>
+
+          <div class="ai-input-area">
+            <textarea id="ai-textarea" placeholder="Ask anything — write bio, suggest projects, draft emails…" rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();aiSend();}"></textarea>
+            <button class="ai-send-btn" onclick="aiSend()"><i class="fas fa-paper-plane"></i></button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="assets/js/three-background.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/admin-auth.js"></script>
+  <script>
+    const kb = [
+      { k: ['bio','about you','introduce'], r: "Here's a professional bio:\n\n\"Avinash Pandey is a passionate Full Stack Developer and AI Engineer with 5+ years of experience crafting digital experiences that push the boundaries of what's possible on the web. Specializing in React, Node.js, and AI integrations, he has delivered 50+ projects for clients worldwide. When not coding, he writes technical articles on AI and web development.\"" },
+      { k: ['project','idea','portfolio'], r: "🚀 Project Ideas:\n1. **AI Resume Analyzer** — Users upload resume, AI gives feedback\n2. **Real-time Stock Dashboard** — WebSocket + Three.js charts\n3. **NFT Gallery** — Showcase digital art with blockchain verification\n4. **AI Writing Assistant** — OpenAI-powered content generator\n5. **Voice-to-Code** — Speak code, see it rendered live\n\nWhich one interests you most?" },
+      { k: ['proposal','client','price'], r: "📝 Client Proposal Template:\n\n**Project: [Name]**\n**Budget: $X,XXX**\n\nDear [Client],\n\nThank you for reaching out! I'm excited about your project.\n\n**Scope:** I'll develop a [description] with [features].\n\n**Timeline:** [X] weeks\n\n**Deliverables:**\n- ✅ [Deliverable 1]\n- ✅ [Deliverable 2]\n\n**Next Steps:** Reply to schedule a discovery call!\n\nBest,\nAvinash" },
+      { k: ['rate','price','charge'], r: "💰 Freelance Rate Guide:\n\n- **Junior Dev:** $30-60/hr\n- **Mid-level:** $60-100/hr\n- **Senior (you!):** $100-200/hr\n- **AI/ML Specialist:** $150-250/hr\n\n**Project-based:**\n- Landing page: $1K-3K\n- Full-stack app: $5K-25K\n- AI integration: $10K-50K\n\nYou're in the Senior+ category given your skills!" },
+      { k: ['seo','search','google'], r: "🔍 Portfolio SEO Tips:\n\n1. Add unique meta title + description to every page\n2. Use Schema.org Person markup for your profile\n3. Write blog posts targeting 'hire [your stack] developer' keywords\n4. Get backlinks from GitHub, LinkedIn, dev.to\n5. Compress images — use WebP format\n6. Add sitemap.xml and robots.txt\n7. Ensure mobile-first, fast loading (aim for <2s)" },
+      { k: ['skill','learn','next'], r: "🚀 Top Skills to Level Up:\n\n1. **AI/LLM Integration** — LangChain, RAG systems (🔥 hottest skill)\n2. **Rust/WebAssembly** — For ultra-fast web apps\n3. **System Design** — Critical for senior roles\n4. **Kubernetes** — Orchestrate containerized apps at scale\n5. **WebXR/AR** — Immersive 3D web is growing fast" },
+    ];
+    const defaults=['Happy to help! What specifically would you like to know?','Great question! Could you provide more details?','Let me think about that for you — could you rephrase or give more context?'];
+    
+    let chatMode = 'ai'; // 'ai' or 'live'
+
+    function toggleLiveChat() {
+      const btn = document.getElementById('live-chat-toggle');
+      const headerName = document.getElementById('chat-header-name');
+      const headerStatus = document.getElementById('chat-header-status');
+      const headerAvatar = document.getElementById('chat-header-avatar');
+      
+      const welcomeAvatar = document.getElementById('welcome-avatar');
+      const welcomeMessage = document.getElementById('welcome-message');
+
+      if (chatMode === 'ai') {
+        chatMode = 'live';
+        btn.innerHTML = '<i class="fas fa-robot"></i><span>Switch to AI Mode</span>';
+        btn.classList.add('neon-btn-purple');
+        
+        headerName.textContent = 'Avinash Pandey';
+        headerStatus.textContent = 'Live Chat · Typically replies instantly';
+        headerStatus.style.color = '#00ff88';
+        headerAvatar.innerHTML = '<img src="assets/images/profile.png" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">';
+        
+        if (welcomeAvatar) welcomeAvatar.innerHTML = '<img src="assets/images/profile.png" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">';
+        if (welcomeMessage) welcomeMessage.textContent = '👋 Hi there! I am Avinash. I just received a notification that you connected. What can I help you with today?';
+        
+        showToast('Switched to Live Chat mode', 'success');
+      } else {
+        chatMode = 'ai';
+        btn.innerHTML = '<i class="fas fa-headset"></i><span>Switch to Live Chat</span>';
+        btn.classList.remove('neon-btn-purple');
+        
+        headerName.textContent = 'AI Assistant';
+        headerStatus.textContent = 'Powered by GPT-4 Turbo · Always online';
+        headerStatus.style.color = 'var(--nebula-cyan)';
+        headerAvatar.innerHTML = '🤖';
+        
+        if (welcomeAvatar) welcomeAvatar.innerHTML = '🤖';
+        if (welcomeMessage) welcomeMessage.textContent = "👋 Hi Avinash! I'm Nova, your AI portfolio assistant. What would you like help with today?";
+        
+        showToast('Switched to AI Assistant mode', 'info');
+      }
+    }
+
+    function getBotReply(msg) {
+      if (chatMode === 'live') {
+        const liveResponses = [
+          "I'm currently looking at your message. Can you tell me a little more about your requirements?",
+          "Thanks for reaching out! I've been working on projects like this recently.",
+          "That sounds interesting! Sure, we can discuss this. Would you like to schedule a quick call?",
+          "I am available to take on new work next week. Could you email me more details?"
+        ];
+        return liveResponses[Math.floor(Math.random() * liveResponses.length)];
+      }
+
+      const m = msg.toLowerCase();
+      for(const item of kb) {
+        if(item.k.some(k=>m.includes(k))) return item.r;
+      }
+      return defaults[Math.floor(Math.random()*defaults.length)];
+    }
+
+    function addMessage(text, who) {
+      const msgs = document.getElementById('ai-messages');
+      const wrap = document.createElement('div');
+      wrap.style.cssText = 'display:flex;gap:12px;align-items:flex-start;' + (who==='user'?'flex-direction:row-reverse;':'');
+      const avatar = document.createElement('div');
+      
+      let avatarContent = 'A';
+      if (who === 'bot') {
+        if (chatMode === 'live') {
+          avatarContent = '<img src="assets/images/profile.png" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">';
+        } else {
+          avatarContent = '🤖';
+        }
+      }
+      
+      avatar.style.cssText = 'width:36px;height:36px;border-radius:50%;background:'+(who==='user'?'linear-gradient(135deg,#00f5ff,#b300ff)':'linear-gradient(135deg,#b300ff,#ff006e)')+';display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;color:'+(who==='user'?'#000':'');
+      avatar.innerHTML = avatarContent;
+      
+      const bubble = document.createElement('div');
+      bubble.className = 'chat-bubble '+who;
+      bubble.style.cssText = 'max-width:75%;white-space:pre-wrap;';
+      bubble.textContent = text;
+      
+      wrap.appendChild(avatar); wrap.appendChild(bubble);
+      msgs.appendChild(wrap);
+      
+      // Force scroll to bottom immediately
+      requestAnimationFrame(() => {
+        msgs.scrollTop = msgs.scrollHeight;
+      });
+    }
+
+    function aiSend() {
+      const ta = document.getElementById('ai-textarea');
+      const val = ta.value.trim();
+      if(!val) return;
+      addMessage(val, 'user');
+      ta.value = '';
+      
+      setTimeout(()=>{
+        addMessage(getBotReply(val), 'bot');
+      }, chatMode === 'live' ? 1200 : 800);
+    }
+
+    function sendPrompt(p) { document.getElementById('ai-textarea').value=p; aiSend(); }
+    function clearChat() { 
+      document.getElementById('ai-messages').innerHTML=''; 
+      addMessage(chatMode === 'live' ? 'Chat cleared. How can I help you today?' : 'Chat cleared. What else would you like to know?', 'bot'); 
+    }
+    document.getElementById('logout-btn')?.addEventListener('click', e=>{e.preventDefault();sessionStorage.clear();window.location.href='login.html';});
+  </script>
+</body>
+</html>
