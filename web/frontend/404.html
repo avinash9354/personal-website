@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 — Mission Aborted (Lost in Space)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --neon-cyan: #00f5ff;
+            --neon-purple: #b300ff;
+            --glass-bg: rgba(10, 10, 15, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #020205;
+            color: #fff;
+            font-family: 'Space Grotesk', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .galaxy-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('assets/images/404-bg.png') no-repeat center center;
+            background-size: cover;
+            z-index: -1;
+            filter: brightness(0.7);
+            animation: slowZoom 20s infinite alternate ease-in-out;
+        }
+
+        @keyframes slowZoom {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+
+        .error-container {
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 60px 40px;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+            animation: slideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .error-code {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 8rem;
+            font-weight: 900;
+            line-height: 1;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 15px rgba(0, 245, 255, 0.3));
+        }
+
+        .error-message {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            color: var(--neon-cyan);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .error-description {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .back-home-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            color: #000;
+            padding: 16px 32px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            transition: all 0.3s;
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.2);
+        }
+
+        .back-home-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 245, 255, 0.4);
+            filter: brightness(1.1);
+        }
+
+        .back-home-btn i {
+            font-size: 1.2rem;
+        }
+
+        .cosmic-glitch {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem;
+            color: rgba(0, 245, 255, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="galaxy-bg"></div>
+    
+    <div class="error-container">
+        <div class="cosmic-glitch">System_Status: Lost_in_Void</div>
+        <div class="error-code">404</div>
+        <div class="error-message">Mission Aborted</div>
+        <p class="error-description">
+            It looks like you've drifted too far into the cosmic void. The page you're searching for has been swallowed by a black hole or never existed in this dimension.
+        </p>
+        <a href="index.html" class="back-home-btn">
+            <i class="fas fa-rocket"></i>
+            BACK TO MISSION CONTROL
+        </a>
+    </div>
+
+    <!-- Optional: Add a small floating astronaut icon/animation if needed -->
+</body>
+</html>

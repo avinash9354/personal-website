@@ -92,10 +92,14 @@ app.use((err, req, res, next) => {
 
 // Handle 404
 app.use((req, res) => {
-  res.status(404).json({
-    success: false,
-    message: 'Route not found'
-  });
+  if (req.accepts('html') && !req.path.startsWith('/api')) {
+    res.status(404).sendFile(path.join(__dirname, '../frontend/404.html'));
+  } else {
+    res.status(404).json({
+      success: false,
+      message: 'Route not found'
+    });
+  }
 });
 
 const PORT = process.env.PORT || 5005;
