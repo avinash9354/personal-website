@@ -29,8 +29,22 @@ app.set('trust proxy', true);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Security middleware
-app.use(helmet());
+// Security middleware — custom CSP to allow Gemini API + CDN resources
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc:  ["'self'"],
+      scriptSrc:   ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com", "https://cdn.jsdelivr.net", "https://fonts.googleapis.com"],
+      styleSrc:    ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://cdnjs.cloudflare.com"],
+      fontSrc:     ["'self'", "https://fonts.gstatic.com", "https://cdnjs.cloudflare.com"],
+      imgSrc:      ["'self'", "data:", "https:", "blob:"],
+      connectSrc:  ["'self'", "https://generativelanguage.googleapis.com", "https://personal-website-ywou.onrender.com"],
+      frameSrc:    ["'none'"],
+      objectSrc:   ["'none'"],
+    },
+  },
+  crossOriginEmbedderPolicy: false,
+}));
 
 // Enable CORS
 app.use(cors()); // Permissive CORS for public access
