@@ -316,27 +316,72 @@
     </div>
   </footer>
 
-  <!-- Chatbot FAB -->
-  <button class="chatbot-fab" id="chatbot-fab"><i class="fas fa-robot"></i></button>
+  <!-- WhatsApp FAB -->
+  <a class="whatsapp-fab" id="whatsapp-fab" href="https://wa.me/919305451640?text=Hi%20Avinash!%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20connect." target="_blank" aria-label="Chat on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <!-- Live Chat FAB + Panel -->
+  <button class="chatbot-fab" id="chatbot-fab"><i class="fas fa-comments"></i></button>
   <div class="chatbot-panel" id="chatbot-panel">
     <div class="chatbot-header">
-      <div class="chatbot-avatar">🌎</div>
+      <div class="chatbot-avatar">💬</div>
       <div class="chatbot-info">
-        <h4>AI Assistant</h4>
-        <div class="status">Online</div>
+        <h4 id="chat-panel-title">Live Chat</h4>
+        <div class="status">Online · Avinash Pandey</div>
       </div>
       <button class="chatbot-close" id="chatbot-close"><i class="fas fa-times"></i></button>
     </div>
-    <div class="chatbot-messages" id="chatbot-messages"></div>
-    <div class="chatbot-input-row">
-      <input class="chatbot-input-field" id="chatbot-input-field" placeholder="Ask about Avinash…">
-      <button class="chatbot-send" id="chatbot-send"><i class="fas fa-paper-plane"></i></button>
+
+    <!-- Tab Switcher -->
+    <div class="chat-tabs">
+      <button class="chat-tab active" id="tab-live" onclick="switchChatTab('live')"><i class="fas fa-user-circle"></i> Live Chat</button>
+      <button class="chat-tab" id="tab-ai" onclick="switchChatTab('ai')"><i class="fas fa-robot"></i> AI Bot</button>
+    </div>
+
+    <!-- Live Chat Form -->
+    <div class="chat-view" id="chat-view-live">
+      <div class="live-chat-intro">
+        <div style="font-size:2rem;margin-bottom:8px;">👋</div>
+        <div style="font-weight:600;font-size:0.95rem;margin-bottom:4px;">Send a Message</div>
+        <div style="font-size:0.78rem;color:var(--text-dim);">Your message will appear in Avinash's admin panel. He'll reply soon!</div>
+      </div>
+      <form id="live-chat-form" autocomplete="off">
+        <div class="live-chat-field">
+          <input class="chatbot-input-field" id="lc-name" type="text" placeholder="Your Name *" required>
+        </div>
+        <div class="live-chat-field">
+          <input class="chatbot-input-field" id="lc-email" type="email" placeholder="Your Email *" required>
+        </div>
+        <div class="live-chat-field">
+          <textarea class="chatbot-input-field" id="lc-message" placeholder="Your Message *" rows="3" required style="resize:none;min-height:80px;font-family:inherit;"></textarea>
+        </div>
+        <button type="submit" class="neon-btn neon-btn-solid" id="lc-submit" style="width:100%;justify-content:center;border-radius:12px;">
+          <i class="fas fa-paper-plane"></i> <span>Send Message</span>
+        </button>
+      </form>
+      <div id="lc-success" style="display:none;text-align:center;padding:28px 16px;">
+        <div style="font-size:2.5rem;margin-bottom:12px;">✅</div>
+        <div style="font-weight:700;font-size:1rem;margin-bottom:6px;color:var(--nebula-cyan);">Message Sent!</div>
+        <div style="font-size:0.82rem;color:var(--text-secondary);">Avinash will reply to your email soon.</div>
+        <button onclick="resetLiveChat()" class="neon-btn neon-btn-sm" style="margin-top:16px;">Send Another</button>
+      </div>
+    </div>
+
+    <!-- AI Bot Chat -->
+    <div class="chat-view" id="chat-view-ai" style="display:none;">
+      <div class="chatbot-messages" id="chatbot-messages"></div>
+      <div class="chatbot-input-row">
+        <input class="chatbot-input-field" id="chatbot-input-field" placeholder="Ask about Avinash…">
+        <button class="chatbot-send" id="chatbot-send"><i class="fas fa-paper-plane"></i></button>
+      </div>
     </div>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="assets/js/three-background.js"></script>
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/gemini-chat.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 

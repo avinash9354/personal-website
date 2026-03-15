@@ -14,6 +14,7 @@ const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
 const projectRoutes = require('./routes/projects');
 const messageRoutes = require('./routes/messages');
+const geminiRoutes  = require('./routes/gemini');
 
 // Connect to database
 const connectDB = require('./config/db');
@@ -44,11 +45,15 @@ app.use('/api', limiter);
 // Static folder
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+// Serve frontend static files (fixes file:// CORS issues in development)
+app.use(express.static(path.join(__dirname, '../frontend')));
+
 // Mount routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/messages', messageRoutes);
+app.use('/api/gemini',   geminiRoutes);
 
 // Health check route
 app.get('/health', (req, res) => {

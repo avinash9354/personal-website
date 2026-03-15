@@ -206,100 +206,96 @@ const initBackToTop = () => {
   btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 };
 
-// ===== CHATBOT & LIVE CHAT =====
+/// ===== LIVE CHAT FORM (index.html) + FAB TOGGLE (all pages) =====
+const API_BASE = 'https://personal-website-ywou.onrender.com';
+
+// Global tab switcher (used by onclick in HTML on index.html)
+window.switchChatTab = (tab) => {
+  const liveView = document.getElementById('chat-view-live');
+  const aiView   = document.getElementById('chat-view-ai');
+  const tabLive  = document.getElementById('tab-live');
+  const tabAi    = document.getElementById('tab-ai');
+  const title    = document.getElementById('chat-panel-title');
+  if (!liveView || !aiView) return;
+  if (tab === 'live') {
+    liveView.style.display = '';
+    aiView.style.display   = 'none';
+    tabLive.classList.add('active');
+    tabAi.classList.remove('active');
+    if (title) title.textContent = 'Live Chat';
+  } else {
+    liveView.style.display = 'none';
+    aiView.style.display   = '';
+    tabAi.classList.add('active');
+    tabLive.classList.remove('active');
+    if (title) title.textContent = 'AI Assistant (Gemini)';
+  }
+};
+
+// Reset live chat form
+window.resetLiveChat = () => {
+  const form    = document.getElementById('live-chat-form');
+  const success = document.getElementById('lc-success');
+  if (form)    { form.reset(); form.style.display = ''; }
+  if (success)   success.style.display = 'none';
+};
+
 const initChatbot = () => {
-  const fab    = document.getElementById('chatbot-fab');
-  const panel  = document.getElementById('chatbot-panel');
+  const fab      = document.getElementById('chatbot-fab');
+  const panel    = document.getElementById('chatbot-panel');
   const closeBtn = document.getElementById('chatbot-close');
-  const input  = document.getElementById('chatbot-input-field');
-  const sendBtn = document.getElementById('chatbot-send');
-  const msgs   = document.getElementById('chatbot-messages');
   if (!fab || !panel) return;
 
-  const kb = [
-    { k: ['who','avinash','about','yourself'], r: "👨‍💻 Avinash Pandey is a passionate Full Stack Developer & AI Engineer with 5+ years of experience. He specializes in creating stunning web apps and AI-powered solutions!" },
-    { k: ['skills','technologies','tech','stack'], r: "⚡ Core skills: React.js, Node.js, Python, Three.js, TensorFlow, MongoDB, AWS, Docker, and Blockchain. Always learning the next big thing!" },
-    { k: ['project','portfolio','work'], r: "🚀 50+ projects built! From AI chatbots to 3D dashboards and blockchain apps. Check the Projects page for all case studies!" },
-    { k: ['experience','job','company'], r: "💼 5+ years at top companies — Senior Full Stack Dev at TechCorp, Lead AI Engineer at InnovateLabs, and now running his own dev agency!" },
-    { k: ['hire','freelance','available'], r: "📬 Yes! Available for freelance projects. Visit the Hire Me page or contact directly — quick response guaranteed!" },
-    { k: ['contact','reach','email'], r: "📧 You can reach Avinash via the Contact page. He typically responds within 24 hours!" },
-    { k: ['price','cost','rate','budget'], r: "💰 Rates depend on project scope. Visit Hire Me for a custom quote — fair prices for premium work!" },
-    { k: ['blog','article','write'], r: "✍️ Avinash writes about AI, Web Dev and Career Growth on the Blog page. New posts every week!" },
-    { k: ['github','code','open'], r: "🐙 GitHub: github.com/avinashpandey — 100+ repos, active contributor to open source!" },
-    { k: ['award','achievement','win'], r: "🏆 Won multiple hackathons including Google AI Challenge 2023. Also a Google Developer Expert and Microsoft MVP!" },
-  ];
-
-  let chatMode = 'ai'; // 'ai' or 'live'
-
-  const getBotReply = (msg) => {
-    const m = msg.toLowerCase();
-    
-    if (chatMode === 'live') {
-      return "Hello! I am Avinash. I received your message and will get back to you shortly. Feel free to leave your email!";
-    }
-
-    if (m.includes('live chat') || m.includes('real person')) {
-      chatMode = 'live';
-      return "🚀 Switching to Live Chat mode... Connecting you to Avinash Pandey. One moment please!";
-    }
-
-    for (const item of kb) {
-      if (item.k.some(k => m.includes(k))) return item.r;
-    }
-    const defaults = [
-      "🤔 Hmm, try asking about Avinash's skills, projects, or how to hire him!",
-      "🌟 Great question! Ask me about his experience, tech stack, or services.",
-      "💡 I know everything about Avinash — skills, projects, contact info. What would you like to know?",
-    ];
-    return defaults[Math.floor(Math.random() * defaults.length)];
-  };
-
-  const showTyping = () => {
-    const div = document.createElement('div');
-    div.className = 'chat-bubble bot typing';
-    div.innerHTML = '<span></span><span></span><span></span>';
-    div.id = 'typing-indicator';
-    msgs.appendChild(div);
-    msgs.scrollTop = msgs.scrollHeight;
-  };
-
-  const addMessage = (text, who) => {
-    const indicator = document.getElementById('typing-indicator');
-    if (indicator) indicator.remove();
-
-    const div = document.createElement('div');
-    div.className = `chat-bubble ${who}`;
-    div.textContent = text;
-    msgs.appendChild(div);
-    msgs.scrollTop = msgs.scrollHeight;
-  };
-
-  const send = () => {
-    const val = input?.value.trim();
-    if (!val) return;
-    addMessage(val, 'user');
-    input.value = '';
-    
-    showTyping();
-    setTimeout(() => {
-      addMessage(getBotReply(val), 'bot');
-    }, chatMode === 'live' ? 2000 : 800);
-  };
-
+  // FAB toggle — always registered here for all pages
   fab.addEventListener('click', () => {
     panel.classList.toggle('open');
     fab.style.transform = panel.classList.contains('open') ? 'rotate(10deg) scale(1.1)' : '';
   });
-  closeBtn?.addEventListener('click', () => { panel.classList.remove('open'); fab.style.transform = ''; });
-  sendBtn?.addEventListener('click', send);
-  input?.addEventListener('keypress', e => { if (e.key === 'Enter') send(); });
+  closeBtn?.addEventListener('click', () => {
+    panel.classList.remove('open');
+    fab.style.transform = '';
+  });
 
-  // Welcome message
-  setTimeout(() => {
-    showTyping();
-    setTimeout(() => addMessage("👋 Hi! I'm Avinash's AI assistant. Ask me anything about his skills, projects, or work! (Type 'Live Chat' to talk to me directly)", 'bot'), 1000);
-  }, 1500);
+  // Live Chat Form Submit (index.html tab layout)
+  const lcForm   = document.getElementById('live-chat-form');
+  const lcSubmit = document.getElementById('lc-submit');
+  const lcSuccess= document.getElementById('lc-success');
+
+  if (lcForm) {
+    lcForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name    = document.getElementById('lc-name')?.value.trim();
+      const email   = document.getElementById('lc-email')?.value.trim();
+      const message = document.getElementById('lc-message')?.value.trim();
+      if (!name || !email || !message) return;
+
+      lcSubmit.disabled = true;
+      lcSubmit.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Sending...</span>';
+
+      try {
+        const res  = await fetch(`${API_BASE}/api/messages`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, subject: `Live Chat from ${name}`, message })
+        });
+        const data = await res.json();
+        if (data.success) {
+          lcForm.style.display = 'none';
+          if (lcSuccess) lcSuccess.style.display = '';
+        } else {
+          showToast('Could not send message. Try again.', 'error');
+          lcSubmit.disabled = false;
+          lcSubmit.innerHTML = '<i class="fas fa-paper-plane"></i> <span>Send Message</span>';
+        }
+      } catch (err) {
+        showToast('Server unreachable. Please WhatsApp or email directly.', 'warning');
+        lcSubmit.disabled = false;
+        lcSubmit.innerHTML = '<i class="fas fa-paper-plane"></i> <span>Send Message</span>';
+      }
+    });
+  }
 };
+
 
 // ===== SMOOTH ANCHOR SCROLL =====
 const initSmoothScroll = () => {
