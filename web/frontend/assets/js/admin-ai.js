@@ -1,7 +1,7 @@
 /**
  * admin-ai.js
- * Advanced AI Assistant logic for Admin Panel
- * Fetches system stats and provides specialized admin context
+ * Advanced Aether AI Assistant logic for Admin Panel
+ * Version 2.0 - Futuristic Redesign
  */
 
 (function () {
@@ -9,8 +9,33 @@
     const STATS_ENDPOINT = '/api/admin/stats';
     let systemStats = null;
     let chatHistory = [];
+    let currentPersona = 'manager';
 
-    // Fetch Token from local storage (admin is already logged in)
+    const PERSONAS = {
+        manager: {
+            title: 'Portfolio Manager',
+            prompt: 'You are Nova, the Portfolio Manager. Focus on business value, message summaries, and project strategy.',
+            icon: 'fa-briefcase'
+        },
+        writer: {
+            title: 'Content Specialist',
+            prompt: 'You are Nova, the Content Specialist. Focus on professional writing, bios, and creative project descriptions.',
+            icon: 'fa-pen-nib'
+        },
+        dev: {
+            title: 'DevOps Assistant',
+            prompt: 'You are Nova, the DevOps Assistant. Focus on system health, node versions, and technical optimization.',
+            icon: 'fa-code'
+        },
+        seo: {
+            title: 'SEO Guru',
+            prompt: 'You are Nova, the SEO Guru. Focus on search optimization, metadata, and web performance analytics.',
+            icon: 'fa-search-plus'
+        }
+    };
+
+    // --- Core Logic ---
+
     const getAuthToken = () => localStorage.getItem('token') || sessionStorage.getItem('token');
 
     async function fetchSystemStats() {
@@ -25,79 +50,54 @@
                 updateStatsUI();
             }
         } catch (err) {
-            console.error('Failed to fetch system stats:', err);
+            console.error('Core Sync Failure:', err);
         }
     }
 
     function updateStatsUI() {
-        const sidebar = document.querySelector('.ai-sidebar');
-        if (!sidebar || !systemStats) return;
-
-        let statsHTML = `
-            <div class="dash-chart-card glass-card animate-fade-in" style="padding:20px; margin-top:12px;">
-                <div class="dash-chart-title" style="margin-bottom:14px; color: var(--nebula-cyan);">
-                    <i class="fas fa-microchip"></i> Real-time Context
-                </div>
-                <div class="stats-mini-grid">
-                    <div class="stat-mini">
-                        <span class="label">Projects</span>
-                        <span class="value">${systemStats.projects.total}</span>
-                    </div>
-                    <div class="stat-mini">
-                        <span class="label">Messages</span>
-                        <span class="value">${systemStats.messages.total}</span>
-                    </div>
-                    <div class="stat-mini">
-                        <span class="label">Unread</span>
-                        <span class="value" style="color:var(--nebula-purple)">${systemStats.messages.unread}</span>
-                    </div>
-                </div>
-                <div style="font-size:0.75rem; color:var(--text-dim); margin-top:10px; border-top:1px solid rgba(255,255,255,0.05); padding-top:8px;">
-                    <i class="fas fa-server"></i> Node: ${systemStats.system.nodeVersion}
-                </div>
-            </div>
-        `;
-        
-        // Append or update widget
-        const existing = document.getElementById('ai-stats-widget');
-        if (existing) {
-            existing.innerHTML = statsHTML;
-        } else {
-            const div = document.createElement('div');
-            div.id = 'ai-stats-widget';
-            div.innerHTML = statsHTML;
-            sidebar.appendChild(div);
-        }
+        if (!systemStats) return;
+        const pCount = document.getElementById('stat-proj-count');
+        const mCount = document.getElementById('stat-msg-count');
+        if (pCount) pCount.innerText = systemStats.projects.total;
+        if (mCount) mCount.innerText = systemStats.messages.total;
     }
 
-    function getAdminPrompt() {
+    function getSystemPrompt() {
         const statsStr = JSON.stringify(systemStats, null, 2);
-        return `You are Nova, the Advanced Portfolio Manager AI for Avinash Pandey.
-You are currently operating within the PRIVATE ADMIN PANEL.
-You have access to the real-time system state provided below. Use this data to assist Avinash in managing his portfolio, drafting replies, and analyzing site performance.
+        const persona = PERSONAS[currentPersona];
+        
+        return `SYSTEM_CORE_INSTRUCTION:
+You are the AETHER_AI Assistant (v2.0) for Avinash Pandey.
+CURRENT_MODE: ${persona.title}
+${persona.prompt}
 
-== SYSTEM STATE ==
+DATABASE_STATE:
 ${statsStr}
 
-== YOUR CAPABILITIES ==
-1. Message Analysis: Summarize recent enquiries and suggest replies.
-2. Project Management: Help draft technical descriptions for new projects based on current tech stack.
-3. Site Health: Report on system uptime and versioning.
-4. Professional Writing: Write bios, proposals, and SEO metadata.
-
-== GUIDELINES ==
-- Always address Avinash as a colleague/partner. 
-- Use the actual data from the system state to answer questions.
-- If asked about "recent messages", refer to the 'recent' array in the state.
-- Keep responses professional, highly insightful, and concise.
-- Use markdown for headings and lists.`;
+OPERATIONAL_GUIDELINES:
+- Address Avinash as a partner.
+- Use the actual data provided to be factual.
+- Format responses with Markdown.
+- Maintain a futuristic, professional, and helpful tone.`;
     }
+
+    window.switchPersona = function(id) {
+        if (!PERSONAS[id]) return;
+        currentPersona = id;
+        
+        // UI Update
+        document.querySelectorAll('.persona-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.persona === id);
+        });
+
+        addMsg(`🔄 **Persona Switched: ${PERSONAS[id].title} mode active.** System recalibrated.`, 'bot');
+    };
 
     async function callGemini(userMessage) {
         if (!systemStats) await fetchSystemStats();
 
         chatHistory.push({ role: 'user', parts: [{ text: userMessage }] });
-        if (chatHistory.length > 30) chatHistory = chatHistory.slice(-30);
+        if (chatHistory.length > 20) chatHistory = chatHistory.slice(-20);
 
         const res = await fetch(GEMINI_ENDPOINT, {
             method: 'POST',
@@ -107,11 +107,11 @@ ${statsStr}
             },
             body: JSON.stringify({
                 contents: chatHistory,
-                systemInstruction: { parts: [{ text: getAdminPrompt() }] },
+                systemInstruction: { parts: [{ text: getSystemPrompt() }] },
             }),
         });
 
-        if (!res.ok) throw new Error('API Error');
+        if (!res.ok) throw new Error('API_SYNC_ERROR');
 
         const data = await res.json();
         if (!data.success) throw new Error(data.message);
@@ -121,16 +121,16 @@ ${statsStr}
         return botText;
     }
 
-    // UI Helpers
+    // --- UI Enhancements ---
+
     function $msgs() { return document.getElementById('chatbot-messages'); }
 
     function showTyping() {
         const m = $msgs(); if (!m) return;
-        if (document.getElementById('typing-indicator')) return;
         const d = document.createElement('div');
-        d.className = 'chat-bubble bot typing glass-bubble';
+        d.className = 'chat-bubble bot typing animate-slide-in';
         d.id = 'typing-indicator';
-        d.innerHTML = '<span></span><span></span><span></span>';
+        d.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
         m.appendChild(d); m.scrollTop = m.scrollHeight;
     }
 
@@ -138,17 +138,37 @@ ${statsStr}
         document.getElementById('typing-indicator')?.remove();
         const m = $msgs(); if (!m) return;
         const d = document.createElement('div');
-        d.className = `chat-bubble ${who} ${who === 'bot' ? 'glass-bubble' : ''} animate-slide-in`;
+        d.className = `chat-bubble ${who} animate-slide-in`;
         
-        // Very basic MD-like formatting
+        // Futuristic Markdown Renderer
         d.innerHTML = text
             .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
             .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
             .replace(/\n/g, '<br>')
-            .replace(/### (.*?)(<br>|$)/g, '<h4 style="color:var(--nebula-cyan);margin:10px 0 5px;">$1</h4>')
-            .replace(/- (.*?)(<br>|$)/g, '<li style="margin-left:15px;list-style:disc;">$1</li>');
+            .replace(/### (.*?)(<br>|$)/g, '<h4 style="color:var(--neon-cyan);margin:8px 0;">$1</h4>')
+            .replace(/- (.*?)(<br>|$)/g, '<li style="margin-left:15px;list-style:square;color:rgba(255,255,255,0.8);">$1</li>');
             
         m.appendChild(d); m.scrollTop = m.scrollHeight;
+    }
+
+    window.sendPrompt = function(p) {
+        const input = document.getElementById('chatbot-input-field');
+        if (input) {
+            input.value = p;
+            document.getElementById('chatbot-send').click();
+        }
+    };
+
+    function simulateNetworkActivity() {
+        const bars = ['health-bar', 'sync-bar'];
+        setInterval(() => {
+            const bar = bars[Math.floor(Math.random() * bars.length)];
+            const el = document.getElementById(bar);
+            if (el) {
+                const val = 95 + Math.random() * 5;
+                el.style.width = val + '%';
+            }
+        }, 3000);
     }
 
     function init() {
@@ -167,7 +187,7 @@ ${statsStr}
                 const reply = await callGemini(val);
                 addMsg(reply, 'bot');
             } catch (err) {
-                addMsg('⚠️ I encountered an error. Check if the token is valid or project quota is exceeded.', 'bot');
+                addMsg('⚠️ **SYSTEM_ERROR**: Connection to Neural Core lost. Quota likely exceeded or API key invalid.', 'bot');
             } finally {
                 input.disabled = false;
                 input.focus();
@@ -175,14 +195,20 @@ ${statsStr}
         };
 
         sendBtn.addEventListener('click', send);
-        input.addEventListener('keypress', e => { if (e.key === 'Enter' && !e.shiftKey) send(); });
+        input.addEventListener('keypress', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); } });
+
+        document.getElementById('clear-chat-btn')?.addEventListener('click', () => {
+             $msgs().innerHTML = '';
+             chatHistory = [];
+             addMsg("🧹 **Session Purged.** Neural buffers cleared.", 'bot');
+        });
 
         fetchSystemStats();
+        simulateNetworkActivity();
         
-        // Welcome message
-        setTimeout(() => addMsg("🤝 **Welcome back, Avinash.** I have loaded the latest system statistics. How would you like to optimize the portfolio today?", 'bot'), 1000);
+        // Boot Sequence
+        setTimeout(() => addMsg("🌌 **AETHER_CORE INITIALIZED.** Welcome back, Avinash Pandey. All systems nominal.", 'bot'), 800);
     }
 
     document.addEventListener('DOMContentLoaded', init);
-    document.addEventListener('chatbot-restart', () => { chatHistory = []; init(); });
 })();

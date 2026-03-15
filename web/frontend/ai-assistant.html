@@ -1,118 +1,406 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Assistant — Avinash Pandey</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="assets/css/style.css">
-  <link rel="stylesheet" href="assets/css/dashboard.css">
-  <style>
-    /* Full page chat adjustments */
-    .ai-chat-layout { height: calc(100vh - 160px); display: grid; grid-template-columns: 280px 1fr; gap: 20px; }
-    .ai-chat-main { display: flex; flex-direction: column; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 24px; overflow: hidden; backdrop-filter: blur(10px); }
-    .ai-messages { flex-grow: 1; overflow-y: auto; padding: 25px; display: flex; flex-direction: column; gap: 20px; }
-    
-    /* Glass Bubbles */
-    .chat-bubble { max-width: 80%; padding: 14px 20px; border-radius: 20px; line-height: 1.6; font-size: 0.92rem; position: relative; transition: all 0.3s ease; }
-    .chat-bubble.glass-bubble { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(5px); align-self: flex-start; border-bottom-left-radius: 4px; color: var(--text-bright); box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-    .chat-bubble.user { background: linear-gradient(135deg, var(--nebula-cyan), var(--nebula-purple)); color: #000; align-self: flex-end; border-bottom-right-radius: 4px; font-weight: 500; box-shadow: 0 4px 15px rgba(0,245,255,0.2); }
-    
-    /* Stats Widget */
-    .stats-mini-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
-    .stat-mini { background: rgba(255,255,255,0.03); padding: 10px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); text-align: center; }
-    .stat-mini .label { display: block; font-size: 0.65rem; text-transform: uppercase; color: var(--text-dim); margin-bottom: 2px; }
-    .stat-mini .value { display: block; font-size: 1.1rem; font-weight: 700; color: var(--text-bright); }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aether AI — Advanced Portfolio Assistant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+    <style>
+        :root {
+            --glass-bg: rgba(10, 10, 15, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --neon-cyan: #00f5ff;
+            --neon-purple: #b300ff;
+            --text-glow: 0 0 10px rgba(0, 245, 255, 0.5);
+        }
 
-    .typing span { width: 8px; height: 8px; background: var(--nebula-cyan); border-radius: 50%; display: inline-block; animation: blink 1.4s infinite both; }
-    .typing span:nth-child(2) { animation-delay: 0.2s; }
-    .typing span:nth-child(3) { animation-delay: 0.4s; }
-    @keyframes blink { 0% { opacity: 0.2; } 20% { opacity: 1; } 100% { opacity: 0.2; } }
-    
-    /* Animations */
-    .animate-fade-in { animation: fadeIn 0.5s ease-out; }
-    .animate-slide-in { animation: slideIn 0.3s ease-out; }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes slideIn { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-  </style>
+        body.admin-body {
+            background: #020205;
+            overflow: hidden;
+        }
+
+        .futuristic-container {
+            height: 100vh;
+            display: grid;
+            grid-template-columns: 280px 1fr 320px;
+            gap: 20px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Re-using sidebar but with deeper glass */
+        .sidebar {
+            background: var(--glass-bg) !important;
+            backdrop-filter: blur(25px) !important;
+            border-right: 1px solid var(--glass-border) !important;
+            border-radius: 24px;
+            height: calc(100vh - 40px);
+            position: relative;
+        }
+
+        /* Central Intelligence Pane */
+        .ai-main-pane {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            height: calc(100vh - 40px);
+        }
+
+        .ai-header {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ai-header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+        }
+
+        .ai-chat-box {
+            flex-grow: 1;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .ai-messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--neon-cyan) transparent;
+        }
+
+        .ai-messages::-webkit-scrollbar { width: 4px; }
+        .ai-messages::-webkit-scrollbar-thumb { background: var(--neon-cyan); border-radius: 10px; }
+
+        /* Glowing Chat Bubbles */
+        .chat-bubble {
+            max-width: 85%;
+            padding: 16px 22px;
+            border-radius: 20px;
+            line-height: 1.6;
+            font-size: 0.95rem;
+            position: relative;
+            animation: slideUp 0.4s ease-out;
+        }
+
+        .chat-bubble.bot {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 245, 255, 0.15);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.05);
+        }
+
+        .chat-bubble.user {
+            background: linear-gradient(135deg, rgba(0, 245, 255, 0.1), rgba(179, 0, 255, 0.1));
+            border: 1px solid rgba(179, 0, 255, 0.3);
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+            color: #fff;
+        }
+
+        /* AI Status Sidebar (Right) */
+        .ai-status-pane {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .status-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 20px;
+        }
+
+        .status-header {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            color: var(--neon-cyan);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .metric-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .metric-label { font-size: 0.8rem; color: rgba(255,255,255,0.5); }
+        .metric-value { font-family: 'Orbitron', sans-serif; font-size: 0.9rem; color: #fff; }
+
+        .progress-bar {
+            height: 4px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 2px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
+            box-shadow: 0 0 10px var(--neon-cyan);
+            width: 0%;
+            transition: width 1.5s cubic-bezier(0.1, 0, 0.2, 1);
+        }
+
+        /* Persona Switcher */
+        .persona-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .persona-btn {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 12px 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .persona-btn i { font-size: 1.2rem; margin-bottom: 5px; display: block; }
+        .persona-btn span { font-size: 0.7rem; display: block; color: rgba(255,255,255,0.6); }
+
+        .persona-btn.active {
+            background: rgba(0, 245, 255, 0.05);
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(0, 245, 255, 0.1);
+        }
+
+        .persona-btn.active span { color: var(--neon-cyan); }
+
+        /* Command Input */
+        .ai-input-wrapper {
+            padding: 20px 30px;
+            background: rgba(0, 0, 0, 0.2);
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .command-bar {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 18px;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: border-color 0.3s;
+        }
+
+        .command-bar:focus-within {
+            border-color: rgba(0, 245, 255, 0.4);
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.05);
+        }
+
+        .command-bar textarea {
+            flex-grow: 1;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.95rem;
+            resize: none;
+            max-height: 100px;
+            outline: none;
+        }
+
+        .send-btn-glowing {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            border: none;
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.3s;
+        }
+
+        .send-btn-glowing:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.4);
+        }
+
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        /* Mobile Adjustments (Quick fix for dash) */
+        @media (max-width: 1200px) {
+            .futuristic-container { grid-template-columns: 80px 1fr 280px; }
+            .sidebar-logo, .sidebar-tagline, .sidebar-user-name, .sidebar-user-role { display: none; }
+        }
+    </style>
 </head>
 <body class="admin-body">
-  <canvas id="three-canvas"></canvas>
-  <div class="dashboard-layout">
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-brand"><a href="index.html" class="sidebar-logo">AVINASH.DEV</a><span class="sidebar-tagline">ADMIN PANEL</span></div>
-      <div class="sidebar-profile"><div class="sidebar-avatar"><img src="assets/images/profile.png" alt="Avinash"><span class="online-dot"></span></div><div><span class="sidebar-user-name">Avinash Pandey</span><span class="sidebar-user-role">Administrator</span></div></div>
-      <nav class="sidebar-nav">
-        <div class="sidebar-nav-section"><div class="sidebar-nav-section-title">Main</div>
-          <a href="dashboard.html" class="sidebar-link"><i class="fas fa-th-large"></i>Dashboard</a>
-          <a href="profile.html" class="sidebar-link"><i class="fas fa-user-circle"></i>Profile</a>
-          <a href="messages.html" class="sidebar-link"><i class="fas fa-envelope"></i>Messages</a>
-          <a href="projects.html" class="sidebar-link"><i class="fas fa-rocket"></i>Projects</a>
-        </div>
-        <div class="sidebar-nav-section"><div class="sidebar-nav-section-title">AI Tools</div>
-          <a href="ai-assistant.html" class="sidebar-link active"><i class="fas fa-robot"></i>AI Assistant</a>
-        </div>
-        <div class="sidebar-nav-section"><div class="sidebar-nav-section-title">Settings</div>
-           <a href="settings.html" class="sidebar-link"><i class="fas fa-cog"></i>Settings</a>
-           <a href="index.html" class="sidebar-link"><i class="fas fa-globe"></i>View Site</a>
-           <a href="login.html" id="logout-btn" class="sidebar-link logout-link"><i class="fas fa-sign-out-alt"></i>Logout</a>
-        </div>
-      </nav>
-    </aside>
+    <canvas id="three-canvas" style="position:fixed; z-index:-1;"></canvas>
 
-    <main class="dashboard-main">
-      <div class="dash-mobile-toggle" id="dash-mobile-toggle"><i class="fas fa-bars"></i></div>
-      <div class="dash-topbar">
-        <div class="dash-topbar-left">
-            <h1>Advanced AI Assistant</h1>
-            <p>Portfolio Manager Mode — Intelligent System Awareness Active</p>
-        </div>
-        <div class="dash-topbar-right">
-            <button class="neon-btn neon-btn-sm" id="clear-chat-btn"><i class="fas fa-trash"></i><span>Clear History</span></button>
-        </div>
-      </div>
-
-      <div class="ai-chat-layout">
-        <div class="ai-sidebar animate-fade-in">
-          <div class="dash-chart-card glass-card" style="padding:20px;">
-            <div class="dash-chart-title" style="margin-bottom:14px; color: var(--nebula-cyan);">Admin Shortcuts</div>
-            <div style="display:flex;flex-direction:column;gap:10px;">
-              <button class="filter-btn" onclick="sendPrompt('Summarize my recent messages')"><i class="fas fa-list-ul"></i> Summarize Messages</button>
-              <button class="filter-btn" onclick="sendPrompt('Suggest a new project based on my skills')"><i class="fas fa-lightbulb"></i> Project Ideas</button>
-              <button class="filter-btn" onclick="sendPrompt('How is my site performing?')"><i class="fas fa-chart-line"></i> Site Health</button>
-              <button class="filter-btn" onclick="sendPrompt('Help me write a professional bio')"><i class="fas fa-pen-fancy"></i> Write Bio</button>
+    <div class="futuristic-container">
+        <!-- Sidebar (Left) -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <a href="index.html" class="sidebar-logo">AETHER</a>
+                <span class="sidebar-tagline">CORE OPS</span>
             </div>
-          </div>
+            <nav class="sidebar-nav">
+                <div class="sidebar-nav-section">
+                    <a href="dashboard.html" class="sidebar-link"><i class="fas fa-th-large"></i>Dashboard</a>
+                    <a href="profile.html" class="sidebar-link"><i class="fas fa-user"></i>Profile</a>
+                    <a href="messages.html" class="sidebar-link"><i class="fas fa-envelope"></i>Inbox</a>
+                    <a href="projects.html" class="sidebar-link"><i class="fas fa-code"></i>Projects</a>
+                </div>
+                <div class="sidebar-nav-section">
+                    <a href="ai-assistant.html" class="sidebar-link active"><i class="fas fa-brain"></i>Aether AI</a>
+                </div>
+            </nav>
+            <div style="position:absolute; bottom:20px; width:100%; padding: 0 15px; box-sizing:border-box;">
+                <a href="login.html" id="logout-btn" class="sidebar-link logout-link"><i class="fas fa-power-off"></i>Logout</a>
+            </div>
+        </aside>
+
+        <!-- Main Intelligence Pane -->
+        <div class="ai-main-pane">
+            <header class="ai-header">
+                <div>
+                    <h1>AETHER_ASSISTANT v2.0</h1>
+                    <span style="font-size:0.7rem; color:rgba(255,255,255,0.4); text-transform:uppercase;">Intelligent Portfolio Core</span>
+                </div>
+                <div style="display:flex; gap:10px;">
+                    <button class="neon-btn neon-btn-sm" onclick="location.reload()"><i class="fas fa-redo"></i></button>
+                    <button class="neon-btn neon-btn-sm" id="clear-chat-btn"><i class="fas fa-terminal"></i><span>Purge Session</span></button>
+                </div>
+            </header>
+
+            <div class="ai-chat-box">
+                <div class="ai-messages" id="chatbot-messages">
+                    <!-- Dynamic Messages -->
+                </div>
+                
+                <div class="ai-input-wrapper">
+                    <div class="command-bar">
+                        <i class="fas fa-chevron-right" style="color:var(--neon-cyan)"></i>
+                        <textarea id="chatbot-input-field" placeholder="Execute command..." rows="1"></textarea>
+                        <button class="send-btn-glowing" id="chatbot-send">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    <div style="margin-top:10px; font-size:0.65rem; color:rgba(255,255,255,0.3); text-align:center;">
+                        SHIFT + ENTER FOR NEW LINE | SYSTEM READY
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="ai-chat-main">
-          <div class="ai-messages" id="chatbot-messages">
-            <!-- Messages will appear here -->
-          </div>
-          <div class="ai-input-area" style="padding: 20px; background: rgba(0,0,0,0.2);">
-            <textarea id="chatbot-input-field" placeholder="Collaborate with Nova..." rows="1" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; padding: 12px 15px;"></textarea>
-            <button class="ai-send-btn" id="chatbot-send" style="margin-left:10px;"><i class="fas fa-paper-plane"></i></button>
-          </div>
-        </div>
-      </div>
-    </main>
-  </div>
+        <!-- Status & Persona Pane (Right) -->
+        <div class="ai-status-pane">
+            <!-- Metrics Card -->
+            <div class="status-card">
+                <div class="status-header"><i class="fas fa-wave-square"></i> NETWORK STATUS</div>
+                <div class="metric-item">
+                    <span class="metric-label">Neural Integrity</span>
+                    <span class="metric-value">98.4%</span>
+                </div>
+                <div class="progress-bar"><div class="progress-fill" id="health-bar" style="width: 98%;"></div></div>
+                
+                <div class="metric-item" style="margin-top:15px;">
+                    <span class="metric-label">Cognitive Sync</span>
+                    <span class="metric-value" id="sync-status">Active</span>
+                </div>
+                <div class="progress-bar"><div class="progress-fill" id="sync-bar" style="width: 100%;"></div></div>
+            </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="assets/js/three-background.js"></script>
-  <script src="assets/js/admin-ai.js"></script>
-  <script>
-    document.getElementById('clear-chat-btn').onclick = () => {
-      document.getElementById('chatbot-messages').innerHTML = '';
-      const event = new CustomEvent('chatbot-restart');
-      document.dispatchEvent(event);
-    };
-    function sendPrompt(p) {
-      const input = document.getElementById('chatbot-input-field');
-      input.value = p;
-      document.getElementById('chatbot-send').click();
-    }
-    document.getElementById('logout-btn')?.addEventListener('click', e=>{e.preventDefault();sessionStorage.clear();window.location.href='login.html';});
-  </script>
+            <!-- Stats Card -->
+            <div class="status-card" id="ai-stats-widget">
+               <div class="status-header"><i class="fas fa-database"></i> SYSTEM CACHE</div>
+               <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; text-align:center;">
+                   <div>
+                       <span style="font-size:0.6rem; color:rgba(232,244,253,0.4);">PROJECTS</span>
+                       <div style="font-family:Orbitron; font-size:1.2rem;" id="stat-proj-count">--</div>
+                   </div>
+                   <div>
+                       <span style="font-size:0.6rem; color:rgba(232,244,253,0.4);">MESSAGES</span>
+                       <div style="font-family:Orbitron; font-size:1.2rem; color:var(--neon-purple);" id="stat-msg-count">--</div>
+                   </div>
+               </div>
+            </div>
+
+            <!-- Persona Switcher -->
+            <div class="status-card">
+                <div class="status-header"><i class="fas fa-user-astronaut"></i> AI PERSONA</div>
+                <div class="persona-grid">
+                    <div class="persona-btn active" data-persona="manager" onclick="switchPersona('manager')">
+                        <i class="fas fa-briefcase"></i>
+                        <span>Manager</span>
+                    </div>
+                    <div class="persona-btn" data-persona="writer" onclick="switchPersona('writer')">
+                        <i class="fas fa-pen-nib"></i>
+                        <span>Writer</span>
+                    </div>
+                    <div class="persona-btn" data-persona="dev" onclick="switchPersona('dev')">
+                        <i class="fas fa-code"></i>
+                        <span>Dev Ops</span>
+                    </div>
+                    <div class="persona-btn" data-persona="seo" onclick="switchPersona('seo')">
+                        <i class="fas fa-search-plus"></i>
+                        <span>SEO Guru</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Shortcuts -->
+            <div class="status-card" style="flex-grow:1;">
+                <div class="status-header"><i class="fas fa-bolt"></i> QUICK EXEC</div>
+                <div style="display:flex; flex-direction:column; gap:8px;">
+                    <button class="filter-btn" style="text-align:left;" onclick="sendPrompt('Summarize recent messages')">Summarize Messages</button>
+                    <button class="filter-btn" style="text-align:left;" onclick="sendPrompt('Draft new project ideas')">Project Ideas</button>
+                    <button class="filter-btn" style="text-align:left;" onclick="sendPrompt('Analyze site SEO')">SEO Audit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="assets/js/three-background.js"></script>
+    <script src="assets/js/admin-ai.js"></script>
+    <script>
+        document.getElementById('logout-btn')?.addEventListener('click', e => {
+            e.preventDefault();
+            sessionStorage.clear();
+            window.location.href = 'login.html';
+        });
+    </script>
 </body>
 </html>
