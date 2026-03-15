@@ -356,12 +356,19 @@ const initContactForm = () => {
     const btn = form.querySelector('[type="submit"]');
     btn.disabled = true;
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+
+    // 15-second timeout so button never stays stuck on "Sending..."
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000);
+
     try {
       const res = await fetch('https://personal-website-ywou.onrender.com/api/messages', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(Object.fromEntries(new FormData(form))),
+        signal: controller.signal,
       });
+      clearTimeout(timeoutId);
       const data = await res.json();
       if (data.success) {
         showToast('Message sent successfully! Avinash will reply soon 🚀', 'success');
@@ -397,8 +404,13 @@ const initContactForm = () => {
         showToast('Failed to send. Please try again.', 'error');
       }
     } catch (err) {
+      clearTimeout(timeoutId);
       console.error('Submission Error:', err);
-      showToast('Server offline. Please email directly.', 'warning');
+      if (err.name === 'AbortError') {
+        showToast('Server is starting up (cold start). Please try again in 30 seconds!', 'warning');
+      } else {
+        showToast('Could not reach server. Please email directly.', 'warning');
+      }
     } finally {
       btn.disabled = false;
       btn.innerHTML = '<i class="fas fa-paper-plane"></i> <span>Send Message</span>';
