@@ -6,16 +6,7 @@
     var publicPages = [
         'login.html', 
         'signup.html', 
-        'index.html', 
-        '404.html', 
-        'about.html', 
-        'blog.html', 
-        'contact.html', 
-        'experience.html', 
-        'hire.html', 
-        'projects.html', 
-        'services.html', 
-        'skills.html'
+        '404.html'
     ];
     var currentPage = window.location.pathname.split('/').pop() || 'index.html';
 

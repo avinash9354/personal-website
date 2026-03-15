@@ -2909,5 +2909,32 @@
       </div>
       <div class="sorry">Oh! You took the wrong turn</div>
     </div>
+
+    <!-- Social Links and Offline Handling -->
+    <div style="position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 20px; z-index: 10;">
+        <a href="https://github.com/avinashpandey" target="_blank" style="color: white; font-size: 1.5rem; transition: opacity 0.3s;"><i class="fab fa-github"></i></a>
+        <a href="https://linkedin.com/in/avinashpandey" target="_blank" style="color: white; font-size: 1.5rem; transition: opacity 0.3s;"><i class="fab fa-linkedin-in"></i></a>
+        <a href="https://www.instagram.com/mr.avi_pandey/" target="_blank" style="color: white; font-size: 1.5rem; transition: opacity 0.3s;"><i class="fab fa-instagram"></i></a>
+    </div>
+
+    <script>
+        // Offline handling
+        window.addEventListener('offline', () => {
+            document.querySelector('.sorry').innerText = "Mission Interrupted: Network Lost";
+            document.querySelector('.error-code').innerText = "OFFLINE";
+        });
+
+        // Error handling redirect
+        window.onerror = function() {
+            // Optional: You could redirect here, but usually, we just want to show the themed error page if already here
+            console.log("System Error Detected");
+        };
+
+        // Hover effect for social links
+        document.querySelectorAll('a[target="_blank"]').forEach(link => {
+            link.onmouseenter = () => link.style.opacity = '0.7';
+            link.onmouseleave = () => link.style.opacity = '1';
+        });
+    </script>
   </body>
 </html>
