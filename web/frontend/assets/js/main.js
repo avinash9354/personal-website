@@ -396,7 +396,8 @@ const initContactForm = () => {
       } else {
         showToast('Failed to send. Please try again.', 'error');
       }
-    } catch {
+    } catch (err) {
+      console.error('Submission Error:', err);
       showToast('Server offline. Please email directly.', 'warning');
     } finally {
       btn.disabled = false;
