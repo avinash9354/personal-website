@@ -15,6 +15,7 @@ const userRoutes = require('./routes/users');
 const projectRoutes = require('./routes/projects');
 const messageRoutes = require('./routes/messages');
 const geminiRoutes  = require('./routes/gemini');
+const adminRoutes   = require('./routes/admin');
 
 // Connect to database
 const connectDB = require('./config/db');
@@ -68,6 +69,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/messages', messageRoutes);
 app.use('/api/gemini',   geminiRoutes);
+app.use('/api/admin',    adminRoutes);
 
 // Health check route
 app.get('/health', (req, res) => {

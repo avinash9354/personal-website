@@ -9,15 +9,31 @@
   <link rel="stylesheet" href="assets/css/dashboard.css">
   <style>
     /* Full page chat adjustments */
-    .ai-chat-layout { height: calc(100vh - 160px); }
-    .ai-messages { flex-grow: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; }
-    .chat-bubble { max-width: 80%; padding: 12px 16px; border-radius: 18px; line-height: 1.5; font-size: 0.95rem; }
-    .chat-bubble.bot { background: rgba(255,255,255,0.05); align-self: flex-start; border-bottom-left-radius: 4px; border: 1px solid rgba(179,0,255,0.2); }
-    .chat-bubble.user { background: linear-gradient(135deg, var(--nebula-cyan), var(--nebula-purple)); color: #000; align-self: flex-end; border-bottom-right-radius: 4px; font-weight: 500; }
+    .ai-chat-layout { height: calc(100vh - 160px); display: grid; grid-template-columns: 280px 1fr; gap: 20px; }
+    .ai-chat-main { display: flex; flex-direction: column; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 24px; overflow: hidden; backdrop-filter: blur(10px); }
+    .ai-messages { flex-grow: 1; overflow-y: auto; padding: 25px; display: flex; flex-direction: column; gap: 20px; }
+    
+    /* Glass Bubbles */
+    .chat-bubble { max-width: 80%; padding: 14px 20px; border-radius: 20px; line-height: 1.6; font-size: 0.92rem; position: relative; transition: all 0.3s ease; }
+    .chat-bubble.glass-bubble { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(5px); align-self: flex-start; border-bottom-left-radius: 4px; color: var(--text-bright); box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+    .chat-bubble.user { background: linear-gradient(135deg, var(--nebula-cyan), var(--nebula-purple)); color: #000; align-self: flex-end; border-bottom-right-radius: 4px; font-weight: 500; box-shadow: 0 4px 15px rgba(0,245,255,0.2); }
+    
+    /* Stats Widget */
+    .stats-mini-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+    .stat-mini { background: rgba(255,255,255,0.03); padding: 10px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); text-align: center; }
+    .stat-mini .label { display: block; font-size: 0.65rem; text-transform: uppercase; color: var(--text-dim); margin-bottom: 2px; }
+    .stat-mini .value { display: block; font-size: 1.1rem; font-weight: 700; color: var(--text-bright); }
+
     .typing span { width: 8px; height: 8px; background: var(--nebula-cyan); border-radius: 50%; display: inline-block; animation: blink 1.4s infinite both; }
     .typing span:nth-child(2) { animation-delay: 0.2s; }
     .typing span:nth-child(3) { animation-delay: 0.4s; }
     @keyframes blink { 0% { opacity: 0.2; } 20% { opacity: 1; } 100% { opacity: 0.2; } }
+    
+    /* Animations */
+    .animate-fade-in { animation: fadeIn 0.5s ease-out; }
+    .animate-slide-in { animation: slideIn 0.3s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideIn { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
   </style>
 </head>
 <body class="admin-body">
@@ -47,18 +63,24 @@
     <main class="dashboard-main">
       <div class="dash-mobile-toggle" id="dash-mobile-toggle"><i class="fas fa-bars"></i></div>
       <div class="dash-topbar">
-        <div class="dash-topbar-left"><h1>AI Assistant</h1><p>Powered by Gemini 2.0 — optimized for portfolio management</p></div>
-        <div class="dash-topbar-right"><button class="neon-btn neon-btn-sm" id="clear-chat-btn"><i class="fas fa-trash"></i><span>Clear Chat</span></button></div>
+        <div class="dash-topbar-left">
+            <h1>Advanced AI Assistant</h1>
+            <p>Portfolio Manager Mode — Intelligent System Awareness Active</p>
+        </div>
+        <div class="dash-topbar-right">
+            <button class="neon-btn neon-btn-sm" id="clear-chat-btn"><i class="fas fa-trash"></i><span>Clear History</span></button>
+        </div>
       </div>
 
       <div class="ai-chat-layout">
-        <div class="ai-sidebar">
-          <div class="dash-chart-card" style="padding:20px;">
-            <div class="dash-chart-title" style="margin-bottom:14px;">Quick Actions</div>
-            <div style="display:flex;flex-direction:column;gap:8px;">
-              <button class="filter-btn" onclick="sendPrompt('Write a professional bio for my portfolio')">✍️ Write Bio</button>
-              <button class="filter-btn" onclick="sendPrompt('Draft a project description for a 3D dashboard')">🌐 Project Desc</button>
-              <button class="filter-btn" onclick="sendPrompt('How can I optimize my site for SEO?')">🔍 SEO Tips</button>
+        <div class="ai-sidebar animate-fade-in">
+          <div class="dash-chart-card glass-card" style="padding:20px;">
+            <div class="dash-chart-title" style="margin-bottom:14px; color: var(--nebula-cyan);">Admin Shortcuts</div>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <button class="filter-btn" onclick="sendPrompt('Summarize my recent messages')"><i class="fas fa-list-ul"></i> Summarize Messages</button>
+              <button class="filter-btn" onclick="sendPrompt('Suggest a new project based on my skills')"><i class="fas fa-lightbulb"></i> Project Ideas</button>
+              <button class="filter-btn" onclick="sendPrompt('How is my site performing?')"><i class="fas fa-chart-line"></i> Site Health</button>
+              <button class="filter-btn" onclick="sendPrompt('Help me write a professional bio')"><i class="fas fa-pen-fancy"></i> Write Bio</button>
             </div>
           </div>
         </div>
@@ -67,9 +89,9 @@
           <div class="ai-messages" id="chatbot-messages">
             <!-- Messages will appear here -->
           </div>
-          <div class="ai-input-area">
-            <textarea id="chatbot-input-field" placeholder="Ask Nova anything..." rows="1"></textarea>
-            <button class="ai-send-btn" id="chatbot-send"><i class="fas fa-paper-plane"></i></button>
+          <div class="ai-input-area" style="padding: 20px; background: rgba(0,0,0,0.2);">
+            <textarea id="chatbot-input-field" placeholder="Collaborate with Nova..." rows="1" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; padding: 12px 15px;"></textarea>
+            <button class="ai-send-btn" id="chatbot-send" style="margin-left:10px;"><i class="fas fa-paper-plane"></i></button>
           </div>
         </div>
       </div>
@@ -78,7 +100,7 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="assets/js/three-background.js"></script>
-  <script src="assets/js/gemini-chat.js"></script>
+  <script src="assets/js/admin-ai.js"></script>
   <script>
     document.getElementById('clear-chat-btn').onclick = () => {
       document.getElementById('chatbot-messages').innerHTML = '';
