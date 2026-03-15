@@ -1,2 +1,3 @@
 [build]
-base = "web/frontend"
+base = "web"
+publish = "frontend"
