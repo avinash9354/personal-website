@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign Up — Avinash Pandey</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="assets/css/style.css">
-  <link rel="icon" type="image/png" href="assets/images/logo.png">
 </head>
+
 <body>
   <canvas id="three-canvas"></canvas>
   <nav class="floating-nav">
-    <a href="index.html" class="nav-logo"><img src="assets/images/logo.png" alt="AP Logo"></a>
+    <a href="index.html" class="nav-logo">AP</a>
     <a href="index.html">Home</a>
     <a href="about.html">About</a>
     <a href="projects.html">Projects</a>
@@ -31,16 +35,20 @@
   </div>
   <div class="theme-toggle" id="theme-toggle"><i class="fas fa-moon"></i></div>
 
-  <main style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;position:relative;z-index:1;padding-top:100px;padding-bottom:40px;">
+  <main
+    style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;position:relative;z-index:1;padding-top:100px;padding-bottom:40px;">
     <div style="width:100%;max-width:480px;">
       <div style="text-align:center;margin-bottom:32px;">
-        <a href="index.html" class="nav-logo" style="justify-content:center;margin-bottom:10px;"><img src="assets/images/logo.png" alt="AP Logo" style="height:60px;"></a>
+        <a href="index.html"
+          style="font-family:'Orbitron',monospace;font-size:2rem;font-weight:900;text-decoration:none;background:linear-gradient(135deg,var(--nebula-cyan),var(--nebula-purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">AP</a>
         <p style="color:var(--text-dim);font-size:0.82rem;margin-top:4px;letter-spacing:1px;">CREATE YOUR ACCOUNT</p>
       </div>
 
       <div class="glass-card" style="padding:36px;border-color:rgba(179,0,255,0.15);">
-        <h2 style="font-family:'Orbitron',monospace;font-size:1.4rem;font-weight:800;margin-bottom:6px;">Join the Galaxy</h2>
-        <p style="color:var(--text-dim);font-size:0.85rem;margin-bottom:28px;">Create an account to access the full experience.</p>
+        <h2 style="font-family:'Orbitron',monospace;font-size:1.4rem;font-weight:800;margin-bottom:6px;">Join the Galaxy
+        </h2>
+        <p style="color:var(--text-dim);font-size:0.85rem;margin-bottom:28px;">Create an account to access the full
+          experience.</p>
 
         <form id="signup-form">
           <div class="form-group">
@@ -54,13 +62,17 @@
           <div class="form-group">
             <label class="form-label">Password</label>
             <div style="position:relative;">
-              <input class="form-input" id="password" name="password" type="password" placeholder="Min. 6 characters" required>
-              <button type="button" id="pw-toggle" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text-dim);cursor:pointer;"><i class="fas fa-eye"></i></button>
+              <input class="form-input" id="password" name="password" type="password" placeholder="Min. 6 characters"
+                required>
+              <button type="button" id="pw-toggle"
+                style="position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text-dim);cursor:pointer;"><i
+                  class="fas fa-eye"></i></button>
             </div>
           </div>
           <div class="form-group">
             <label class="form-label">Confirm Password</label>
-            <input class="form-input" id="confirm-password" name="confirm-password" type="password" placeholder="Repeat password" required>
+            <input class="form-input" id="confirm-password" name="confirm-password" type="password"
+              placeholder="Repeat password" required>
           </div>
 
           <!-- Password Strength -->
@@ -71,19 +83,23 @@
             <div id="pw-label" style="font-size:0.72rem;color:var(--text-dim);margin-top:4px;"></div>
           </div>
 
-          <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:0.82rem;color:var(--text-secondary);margin-bottom:24px;">
+          <label
+            style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:0.82rem;color:var(--text-secondary);margin-bottom:24px;">
             <input type="checkbox" required style="accent-color:var(--nebula-cyan);margin-top:2px;">
-            <span>I agree to the <a href="#" style="color:var(--nebula-cyan);text-decoration:none;">Terms of Service</a> and <a href="#" style="color:var(--nebula-cyan);text-decoration:none;">Privacy Policy</a></span>
+            <span>I agree to the <a href="#" style="color:var(--nebula-cyan);text-decoration:none;">Terms of Service</a>
+              and <a href="#" style="color:var(--nebula-cyan);text-decoration:none;">Privacy Policy</a></span>
           </label>
 
-          <button type="submit" class="neon-btn neon-btn-purple" style="width:100%;justify-content:center;font-size:1rem;padding:14px;">
+          <button type="submit" class="neon-btn neon-btn-purple"
+            style="width:100%;justify-content:center;font-size:1rem;padding:14px;">
             <i class="fas fa-user-plus"></i><span>Create Account</span>
           </button>
         </form>
 
         <div class="neon-divider" style="margin:24px 0;"></div>
         <p style="text-align:center;font-size:0.88rem;color:var(--text-secondary);">
-          Already have an account? <a href="login.html" style="color:var(--nebula-cyan);font-weight:600;text-decoration:none;">Sign In →</a>
+          Already have an account? <a href="login.html"
+            style="color:var(--nebula-cyan);font-weight:600;text-decoration:none;">Sign In →</a>
         </p>
       </div>
     </div>
@@ -152,32 +168,33 @@
   </script>
   <script>
     // Password visibility toggle
-    document.getElementById('pw-toggle').addEventListener('click', function(){
+    document.getElementById('pw-toggle').addEventListener('click', function () {
       const pw = document.getElementById('password');
       const ic = this.querySelector('i');
-      pw.type = pw.type==='password' ? 'text' : 'password';
-      ic.className = pw.type==='password' ? 'fas fa-eye' : 'fas fa-eye-slash';
+      pw.type = pw.type === 'password' ? 'text' : 'password';
+      ic.className = pw.type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
     });
     // Password strength indicator
-    document.getElementById('password').addEventListener('input', function(){
+    document.getElementById('password').addEventListener('input', function () {
       const val = this.value;
       const bar = document.getElementById('pw-bar');
       const lbl = document.getElementById('pw-label');
       document.getElementById('pw-strength-wrap').style.display = val ? 'block' : 'none';
       let score = 0;
-      if(val.length >= 6) score++;
-      if(val.length >= 10) score++;
-      if(/[A-Z]/.test(val)) score++;
-      if(/[0-9]/.test(val)) score++;
-      if(/[^A-Za-z0-9]/.test(val)) score++;
-      const colors = ['#ff3d3d','#ff8c00','#ffd700','#00f5ff','#00ff88'];
-      const labels = ['Very Weak','Weak','Fair','Strong','Very Strong'];
-      const widths = ['20%','40%','60%','80%','100%'];
-      bar.style.width = widths[score-1] || '0';
-      bar.style.background = colors[score-1] || '#ff3d3d';
-      lbl.textContent = labels[score-1] || '';
-      lbl.style.color = colors[score-1] || '';
+      if (val.length >= 6) score++;
+      if (val.length >= 10) score++;
+      if (/[A-Z]/.test(val)) score++;
+      if (/[0-9]/.test(val)) score++;
+      if (/[^A-Za-z0-9]/.test(val)) score++;
+      const colors = ['#ff3d3d', '#ff8c00', '#ffd700', '#00f5ff', '#00ff88'];
+      const labels = ['Very Weak', 'Weak', 'Fair', 'Strong', 'Very Strong'];
+      const widths = ['20%', '40%', '60%', '80%', '100%'];
+      bar.style.width = widths[score - 1] || '0';
+      bar.style.background = colors[score - 1] || '#ff3d3d';
+      lbl.textContent = labels[score - 1] || '';
+      lbl.style.color = colors[score - 1] || '';
     });
   </script>
 </body>
+
 </html>
