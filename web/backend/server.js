@@ -92,7 +92,10 @@ app.use((err, req, res, next) => {
 
 // Handle 404
 app.use((req, res) => {
-  if (req.accepts('html') && !req.path.startsWith('/api')) {
+  const isApiRequest = req.path.startsWith('/api');
+  const acceptsHtml = req.accepts('html');
+  
+  if (acceptsHtml && !isApiRequest) {
     res.status(404).sendFile(path.join(__dirname, '../frontend/404.html'));
   } else {
     res.status(404).json({
