@@ -22,8 +22,8 @@ connectDB();
 
 const app = express();
 
-// Trust proxy for Render/Cloudflare/Load balancers
-app.set('trust proxy', true); 
+// Trust proxy — '1' = trust exactly one hop (Render's load balancer)
+app.set('trust proxy', 1);
 
 // Body parser
 app.use(express.json());
