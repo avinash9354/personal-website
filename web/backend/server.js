@@ -29,10 +29,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
 
 // Enable CORS
-app.use(cors({
-  origin: true, // Dynamically allow the request origin
-  credentials: true
-}));
+app.use(cors()); // Permissive CORS for public access
 
 // Rate limiting
 const limiter = rateLimit({
