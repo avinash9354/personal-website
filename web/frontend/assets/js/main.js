@@ -351,6 +351,13 @@ const initClickBurst = () => {
 const initContactForm = () => {
   const form = document.getElementById('contact-form');
   if (!form) return;
+
+  // Pre-warm the Render server silently as soon as page loads.
+  // Free-tier Render sleeps after inactivity — this wakes it up
+  // so the server is ready by the time the user fills and submits the form.
+  fetch('https://personal-website-ywou.onrender.com/health', { method: 'GET' })
+    .catch(() => {}); // silently ignore — just a wake-up call
+
   form.addEventListener('submit', async e => {
     e.preventDefault();
     const btn = form.querySelector('[type="submit"]');
