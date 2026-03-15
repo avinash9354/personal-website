@@ -128,7 +128,7 @@
       const btn = e.target.querySelector('[type="submit"]');
       btn.disabled=true; btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Submitting...';
       try {
-        const r = await fetch('http://localhost:5005/api/messages', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.fromEntries(new FormData(e.target)))});
+        const r = await fetch('https://personal-website-ywou.onrender.com/api/messages', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.fromEntries(new FormData(e.target)))});
         const d = await r.json();
         if(d.success){window.showToast('Project submitted! Avinash will reply within 2 hours 🚀','success');e.target.reset();}
         else {window.showToast('Failed. Please try again.','error');}

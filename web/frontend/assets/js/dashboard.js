@@ -1,7 +1,7 @@
 // Dashboard Handler
 class DashboardHandler {
     constructor() {
-        this.baseURL = 'http://localhost:5005/api';
+        this.baseURL = 'https://personal-website-ywou.onrender.com/api';
         this.init();
     }
     

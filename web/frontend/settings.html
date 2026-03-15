@@ -263,7 +263,7 @@
             <div class="setting-info"><h4>Last Login</h4><p id="last-login-display">Loading...</p></div>
           </div>
           <div class="setting-row">
-            <div class="setting-info"><h4>Backend Status</h4><p>API server at localhost:5005</p></div>
+            <div class="setting-info"><h4>Backend Status</h4><p>API server at personal-website-ywou.onrender.com</p></div>
             <span id="api-status" style="font-size:0.72rem;color:#ffd700;background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.2);padding:3px 10px;border-radius:20px;flex-shrink:0;">Checking...</span>
           </div>
           <div class="setting-row">
@@ -438,7 +438,7 @@
   document.getElementById('last-login-display').textContent = new Date().toLocaleString();
 
   // Check API status
-  fetch('http://localhost:5005/api/messages')
+  fetch('https://personal-website-ywou.onrender.com/api/messages')
     .then(r => {
       const el = document.getElementById('api-status');
       el.textContent = r.ok || r.status === 401 ? 'Online' : 'Error';

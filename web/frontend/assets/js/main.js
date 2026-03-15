@@ -357,7 +357,7 @@ const initContactForm = () => {
     btn.disabled = true;
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
     try {
-      const res = await fetch('http://localhost:5005/api/messages', {
+      const res = await fetch('https://personal-website-ywou.onrender.com/api/messages', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(Object.fromEntries(new FormData(form))),
