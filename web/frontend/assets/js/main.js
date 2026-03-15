@@ -352,72 +352,60 @@ const initContactForm = () => {
   const form = document.getElementById('contact-form');
   if (!form) return;
 
-  // Pre-warm the Render server silently as soon as page loads.
-  // Free-tier Render sleeps after inactivity — this wakes it up
-  // so the server is ready by the time the user fills and submits the form.
-  fetch('https://personal-website-ywou.onrender.com/health', { method: 'GET' })
-    .catch(() => {}); // silently ignore — just a wake-up call
+  const API = 'https://personal-website-ywou.onrender.com';
+
+  // Start warming the server immediately on page load.
+  // We track the promise so if user submits before it completes,
+  // we wait for it automatically instead of erroring out.
+  let serverWarmPromise = fetch(`${API}/health`, { method: 'GET' })
+    .then(() => true)
+    .catch(() => false);
 
   form.addEventListener('submit', async e => {
     e.preventDefault();
     const btn = form.querySelector('[type="submit"]');
+    const formData = Object.fromEntries(new FormData(form));
     btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Waking up server...';
+
+    // Step 1: If server is still waking up, wait for it automatically (up to 90s)
+    await Promise.race([
+      serverWarmPromise,
+      new Promise(resolve => setTimeout(() => resolve(false), 90000))
+    ]).catch(() => false);
+
+    // Step 2: Send the message
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
 
-    // 15-second timeout so button never stays stuck on "Sending..."
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 15000);
-
     try {
-      const res = await fetch('https://personal-website-ywou.onrender.com/api/messages', {
+      const res = await fetch(`${API}/api/messages`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(Object.fromEntries(new FormData(form))),
-        signal: controller.signal,
+        body: JSON.stringify(formData),
       });
-      clearTimeout(timeoutId);
       const data = await res.json();
       if (data.success) {
         showToast('Message sent successfully! Avinash will reply soon 🚀', 'success');
         form.reset();
-        
+        // Re-warm for next submission
+        serverWarmPromise = fetch(`${API}/health`, { method: 'GET' }).then(() => true).catch(() => false);
+
         // Trigger Confetti Animation
         if (typeof confetti !== 'undefined') {
           const duration = 3000;
           const end = Date.now() + duration;
-
           (function frame() {
-            confetti({
-              particleCount: 5,
-              angle: 60,
-              spread: 55,
-              origin: { x: 0 },
-              colors: ['#00f5ff', '#b300ff', '#ff006e']
-            });
-            confetti({
-              particleCount: 5,
-              angle: 120,
-              spread: 55,
-              origin: { x: 1 },
-              colors: ['#00f5ff', '#b300ff', '#ff006e']
-            });
-
-            if (Date.now() < end) {
-              requestAnimationFrame(frame);
-            }
+            confetti({ particleCount: 5, angle: 60,  spread: 55, origin: { x: 0 }, colors: ['#00f5ff', '#b300ff', '#ff006e'] });
+            confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#00f5ff', '#b300ff', '#ff006e'] });
+            if (Date.now() < end) requestAnimationFrame(frame);
           }());
         }
       } else {
         showToast('Failed to send. Please try again.', 'error');
       }
     } catch (err) {
-      clearTimeout(timeoutId);
       console.error('Submission Error:', err);
-      if (err.name === 'AbortError') {
-        showToast('Server is starting up (cold start). Please try again in 30 seconds!', 'warning');
-      } else {
-        showToast('Could not reach server. Please email directly.', 'warning');
-      }
+      showToast('Could not reach server. Please email directly.', 'warning');
     } finally {
       btn.disabled = false;
       btn.innerHTML = '<i class="fas fa-paper-plane"></i> <span>Send Message</span>';
